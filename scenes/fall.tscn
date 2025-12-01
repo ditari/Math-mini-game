@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://edhx1uuqab38"]
+
+[ext_resource type="Script" path="res://scripts/fall.gd" id="1_rlim3"]
+[ext_resource type="Texture2D" uid="uid://c67nn3ta8o6n2" path="res://assets/bg.png" id="2_xhlvp"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_rlim3")
+
+[node name="Bg" type="Sprite2D" parent="."]
+position = Vector2(364.5, 640)
+scale = Vector2(1.02361, 1.02031)
+texture = ExtResource("2_xhlvp")
+
+[node name="arrayboxes" type="Node2D" parent="."]
