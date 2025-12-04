@@ -1,15 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://edhx1uuqab38"]
+[gd_scene load_steps=3 format=3 uid="uid://bupsmhyrefnpy"]
 
-[ext_resource type="Script" path="res://scripts/fall.gd" id="1_rlim3"]
-[ext_resource type="Texture2D" uid="uid://c67nn3ta8o6n2" path="res://assets/bg.png" id="2_xhlvp"]
+[ext_resource type="Script" path="res://scripts/fall6.gd" id="1_g6yyh"]
+[ext_resource type="Texture2D" uid="uid://c67nn3ta8o6n2" path="res://assets/bg.png" id="2_1mu4c"]
 
 [node name="Node2D" type="Node2D"]
-script = ExtResource("1_rlim3")
+script = ExtResource("1_g6yyh")
 
 [node name="Bg" type="Sprite2D" parent="."]
 position = Vector2(364.5, 640)
 scale = Vector2(1.02361, 1.02031)
-texture = ExtResource("2_xhlvp")
+texture = ExtResource("2_1mu4c")
 
 [node name="parentboxes" type="Node2D" parent="."]
 

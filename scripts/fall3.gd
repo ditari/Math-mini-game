@@ -11,7 +11,7 @@ var arrayorder
 var correctanswer = 0
 
 var correct_out_screen = false
-var clicked_right
+var clicked_right = null
 
 var screen_size
 var gaps

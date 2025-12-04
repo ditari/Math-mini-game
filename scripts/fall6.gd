@@ -8,10 +8,12 @@ var score = 0
 var arraynumber
 var arrayorder
 
+var nextshift = 0
+
 var correctanswer = 0
 
 var correct_out_screen = false
-var clicked_right
+var clicked_right = null
 
 var screen_size
 var gaps
@@ -26,8 +28,8 @@ func _ready():
 	
 	generatequestion()
 	generateorder()
-	await get_tree().create_timer(1).timeout
-	generateboxes()
+	nextshift = 1
+
 	$hplabel.text = str(hp)
 	$scorelabel.text = str(score)
 
@@ -38,22 +40,36 @@ func _process(delta):
 			deleteparentboxes()
 			generatequestion()
 			generateorder()
-			await get_tree().create_timer(0.5).timeout
-			generateboxes()
+			
+			nextshift = 1
+			
 		elif clicked_right == false:
 			hp = hp-1 
 			deleteparentboxes()
 			generatequestion()
 			generateorder()
-			await get_tree().create_timer(0.5).timeout
-			generateboxes()
+			
+			nextshift = 1
+			
 	else:
 		hp = hp-1 
 		deleteparentboxes()
 		generatequestion()
 		generateorder()
+		
+		nextshift = 1
+		
+	
+	if nextshift == 1 and $parentboxes.get_child_count()==0:
 		await get_tree().create_timer(0,5).timeout
-		generateboxes()
+		generateboxes1()
+		nextshift = 2
+		
+	elif nextshift == 2 and $parentboxes.get_child_count()==0:
+		await get_tree().create_timer(0,5).timeout
+		generateboxes2()
+		
+		
 		
 	$hplabel.text = str(hp)
 	$scorelabel.text = str(score)		
@@ -82,24 +98,36 @@ func generatequestion():
 	$questionlabel.text = str(a) + " + " + str(b) + " = ?"
 	
 	var numbers = get_wrong_numbers(correctanswer)
-	var wronganswer1 = numbers[0]
-	var wronganswer2 = numbers[1]	
 	
-	arraynumber = [correctanswer, wronganswer1,wronganswer2]
+	arraynumber = [correctanswer, numbers[0], numbers[1], numbers[2],numbers[3], numbers[4]]
 	arraynumber.shuffle()
 	
 func generateorder():
-	arrayorder = ["left","center","right"]
-	arrayorder.shuffle()
+	var array1 = ["left","center","right"]
+	array1.shuffle()
+	var array2 = ["left","center","right"]
+	array2.shuffle()	
+	
+	arrayorder = array1 + array2
 
-func generateboxes():
+func generateboxes1():
 	generatebox(arrayorder[0],arraynumber[0])
 	#print("a")
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(randi_range(1,3)).timeout
 	generatebox(arrayorder[1], arraynumber[1])
 	#print("b")
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(randi_range(1,3)).timeout
 	generatebox(arrayorder[2], arraynumber[2])
+	#print("c")
+	
+func generateboxes2():
+	generatebox(arrayorder[3],arraynumber[3])
+	#print("a")
+	await get_tree().create_timer(randi_range(1,3)).timeout
+	generatebox(arrayorder[4], arraynumber[4])
+	#print("b")
+	await get_tree().create_timer(randi_range(1,3)).timeout
+	generatebox(arrayorder[5], arraynumber[5])
 	#print("c")
 
 func generatebox(type, numberlabel):
@@ -117,8 +145,7 @@ func generatebox(type, numberlabel):
 	else :
 		fallbox.position = Vector2(3*gaps+320+80,300)
 		
-	
-	var s = randi_range(50, 150)
+	var s = randi_range(50, 100)
 	
 	fallbox.set_label(numberlabel)
 	fallbox.set_speed(s)
