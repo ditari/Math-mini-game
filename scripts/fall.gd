@@ -5,13 +5,24 @@ var fallbox
 var hp = 5
 var score = 0
 
+var leftnumber
+var centernumber
+var rightnumber
+
 var correctanswer = 0
 
 var correct_out_screen = false
 var clicked_right
 
+var screen_size
+var gaps
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	screen_size = get_viewport_rect().size
+	gaps = ((screen_size.x - (160*3))/4) #1kotak width nya 160		
+	
 	randomize()
 	generatequestion()
 	$hplabel.text = str(hp)
@@ -63,28 +74,63 @@ func generatequestion():
 	var r = randi_range(1, 3)
 	
 	if r == 1 :
-		generateboxes(correctanswer,wronganswer1,wronganswer2)
+		leftnumber = correctanswer
+		centernumber = wronganswer1
+		rightnumber = wronganswer2
 	elif r == 2 :
-		generateboxes(wronganswer1,correctanswer,wronganswer2)
-	else:
-		generateboxes(wronganswer1,wronganswer2,correctanswer)
+		leftnumber = wronganswer1
+		centernumber = correctanswer
+		rightnumber = wronganswer2
+	else : 
+		leftnumber = wronganswer1
+		centernumber = wronganswer2
+		rightnumber = correctanswer
+	generateorder()
 	
-	
+func generateorder():
+	var r = randi_range(1, 6)
+	if r == 1 :
+		generateboxes ("left","center", "right")
+	elif r == 2:
+		generateboxes ("left","right", "center")
+	elif r == 3:
+		generateboxes ("center","left", "right")
+	elif r == 4:
+		generateboxes ("center","right", "left")
+	elif r == 5:
+		generateboxes ("right","left", "center")
+	else :
+		generateboxes ("right","center", "left")
+		
+
 func generateboxes(a,b,c):
+	generatebox(a)
+	await get_tree().create_timer(1).timeout
+	generatebox(b)
+	await get_tree().create_timer(1).timeout
+	generatebox(c)
+
+func generatebox(type):
 	var screen_size = get_viewport_rect().size
 	var gaps = ((screen_size.x - (160*3))/4) #1kotak width nya 160	
 	
-	generatebox(a, gaps+80,300) #+80 karena di tengah?
-	generatebox(b, 2*gaps+160+80,300)
-	generatebox(c, 3*gaps+320+80,300)
-	
-func generatebox(text,x,y):
 	fallbox = fallboxscene.instantiate()
-	fallbox.position = Vector2(x,y)
-	
+		
 	$arrayboxes.add_child(fallbox)
-	fallbox.set_label(text)
-	fallbox.set_speed(100)
+	
+	if type == "left" :
+		fallbox.position = Vector2(gaps+80,300)
+		fallbox.set_label(leftnumber)
+	elif type == "center" :
+		fallbox.position = Vector2(2*gaps+160+80,300)
+		fallbox.set_label(centernumber)
+	else :
+		fallbox.position = Vector2(3*gaps+320+80,300)
+		fallbox.set_label(rightnumber)
+	
+	var s = randi_range(50, 150)
+	
+	fallbox.set_speed(s)
 	fallbox.connect("out_of_screen", box_out_of_screen)
 	fallbox.connect("button_pressed", box_pressed)
 	
