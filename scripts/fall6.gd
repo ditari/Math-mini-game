@@ -9,6 +9,7 @@ var arraynumber
 var arrayorder
 
 var nextshift = 0
+var is_generating = false
 
 var correctanswer = 0
 
@@ -17,6 +18,7 @@ var clicked_right = null
 
 var screen_size
 var gaps
+
 
 
 # Called when the node enters the scene tree for the first time.
@@ -30,50 +32,60 @@ func _ready():
 	generateorder()
 	nextshift = 1
 
-	$hplabel.text = str(hp)
-	$scorelabel.text = str(score)
+	$hplabel.text = "HP: " +str(hp)
+	$scorelabel.text = "SCORE: " + str(score)
 
 func _process(delta):
 	if correct_out_screen == false:
 		if clicked_right == true:
 			score = score + 100
+			print("a")
 			deleteparentboxes()
 			generatequestion()
 			generateorder()
-			
 			nextshift = 1
 			
 		elif clicked_right == false:
 			hp = hp-1 
+			print("b")
 			deleteparentboxes()
 			generatequestion()
 			generateorder()
-			
 			nextshift = 1
 			
 	else:
 		hp = hp-1 
+		print("c")
 		deleteparentboxes()
 		generatequestion()
 		generateorder()
 		
 		nextshift = 1
 		
+	# Prevent duplicate calls
+	if is_generating:
+		return
 	
 	if nextshift == 1 and $parentboxes.get_child_count()==0:
-		await get_tree().create_timer(0,5).timeout
-		generateboxes1()
+		print("d")
+		is_generating = true
+		await get_tree().create_timer(0.5).timeout
+		await generateboxes1()
 		nextshift = 2
+		is_generating = false
 		
 	elif nextshift == 2 and $parentboxes.get_child_count()==0:
-		await get_tree().create_timer(0,5).timeout
-		generateboxes2()
+		print("e")
+		is_generating = true
+		await get_tree().create_timer(0.5).timeout
+		await generateboxes2()
+		is_generating = false
 		
 		
 		
-	$hplabel.text = str(hp)
-	$scorelabel.text = str(score)		
-		
+	$hplabel.text = "HP: " +str(hp)
+	$scorelabel.text = "SCORE: " + str(score)
+			
 	if hp <= 0:
 		print("gameover")
 		hp=5

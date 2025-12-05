@@ -8,6 +8,8 @@ var score = 0
 var arraynumber
 var arrayorder
 
+var generating = false
+
 var correctanswer = 0
 
 var correct_out_screen = false
@@ -26,8 +28,8 @@ func _ready():
 	
 	generatequestion()
 	generateorder()
-	await get_tree().create_timer(1).timeout
-	generateboxes()
+	
+
 	$hplabel.text = str(hp)
 	$scorelabel.text = str(score)
 
@@ -38,22 +40,18 @@ func _process(delta):
 			deleteparentboxes()
 			generatequestion()
 			generateorder()
-			await get_tree().create_timer(0.5).timeout
-			generateboxes()
+			
 		elif clicked_right == false:
 			hp = hp-1 
 			deleteparentboxes()
 			generatequestion()
 			generateorder()
-			await get_tree().create_timer(0.5).timeout
-			generateboxes()
+			
 	else:
 		hp = hp-1 
 		deleteparentboxes()
 		generatequestion()
 		generateorder()
-		await get_tree().create_timer(0,5).timeout
-		generateboxes()
 		
 	$hplabel.text = str(hp)
 	$scorelabel.text = str(score)		
@@ -61,6 +59,16 @@ func _process(delta):
 	if hp <= 0:
 		print("gameover")
 		hp=5
+		
+	if generating:
+		return
+	
+	if $parentboxes.get_child_count()==0:	
+		generating = true
+		await get_tree().create_timer(0.5).timeout
+		await generateboxes()
+		generating = false
+		
 
 func get_wrong_numbers(erasednumber):
 	var numbers = [0,1,2,3,4,5,6,7,8,9,10]
