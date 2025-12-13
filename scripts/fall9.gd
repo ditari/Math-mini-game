@@ -73,9 +73,15 @@ func _process(delta):
 		is_generating = true
 		await get_tree().create_timer(0.5).timeout
 		await generateboxes2()
+		nextshift = 3
 		is_generating = false
-		
-		
+	
+	elif nextshift == 3 and $parentboxes.get_child_count()==0:	
+		is_generating = true
+		await get_tree().create_timer(0.5).timeout
+		await generateboxes3()
+		is_generating = false
+			
 		
 	$hplabel.text = "HP: " +str(hp)
 	$scorelabel.text = "SCORE: " + str(score)
@@ -105,36 +111,42 @@ func generatequestion():
 	
 	var numbers = get_wrong_numbers(correctanswer)
 	
-	arraynumber = [correctanswer, numbers[0], numbers[1], numbers[2],numbers[3], numbers[4]]
+	arraynumber = numbers.slice(0,8)
+	arraynumber.append(correctanswer)
 	arraynumber.shuffle()
+	
 	
 func generateorder():
 	var array1 = ["left","center","right"]
 	array1.shuffle()
 	var array2 = ["left","center","right"]
 	array2.shuffle()	
+	var array3 = ["left","center","right"]
+	array3.shuffle()
 	
-	arrayorder = array1 + array2
+	arrayorder = array1 + array2 + array3
+	
 
 func generateboxes1():
 	generatebox(arrayorder[0],arraynumber[0])
-	#print("a")
 	await get_tree().create_timer(randi_range(1,3)).timeout
 	generatebox(arrayorder[1], arraynumber[1])
-	#print("b")
 	await get_tree().create_timer(randi_range(1,3)).timeout
 	generatebox(arrayorder[2], arraynumber[2])
-	#print("c")
 	
 func generateboxes2():
 	generatebox(arrayorder[3],arraynumber[3])
-	#print("a")
 	await get_tree().create_timer(randi_range(1,3)).timeout
 	generatebox(arrayorder[4], arraynumber[4])
-	#print("b")
 	await get_tree().create_timer(randi_range(1,3)).timeout
 	generatebox(arrayorder[5], arraynumber[5])
-	#print("c")
+
+func generateboxes3():
+	generatebox(arrayorder[6],arraynumber[6])
+	await get_tree().create_timer(randi_range(1,3)).timeout
+	generatebox(arrayorder[7], arraynumber[7])
+	await get_tree().create_timer(randi_range(1,3)).timeout
+	generatebox(arrayorder[8], arraynumber[8])
 
 func generatebox(type, numberlabel):
 	var screen_size = get_viewport_rect().size
