@@ -1,177 +1,212 @@
 extends Node2D
 
 var fallboxscene: PackedScene = load("res://scenes/fallbox.tscn")
-var fallbox
-var hp = 5
-var score = 0
 
-var arraynumber
-var arrayorder
+var hp := 5
+var score := 0
 
-var nextshift = 0
-var is_generating = false
+var arraynumber := []
+var arrayorder := []
 
-var correctanswer = 0
+var nextshift := 1
+var is_generating := false
+var spawn_id := 0   # 🔑 wave/version ID
 
-var correct_out_screen = false
+var correctanswer := 0
+var correct_out_screen := false
 var clicked_right = null
 
 var screen_size
 var gaps
 
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_size = get_viewport_rect().size
-	gaps = ((screen_size.x - (160*3))/4) #1kotak width nya 160		
-	
+	gaps = ((screen_size.x - (160 * 3)) / 4)
 	randomize()
-	
-	generatequestion()
-	generateorder()
-	nextshift = 1
+	start_round()
 
-	$hplabel.text = "HP: " +str(hp)
-	$scorelabel.text = "SCORE: " + str(score)
 
 func _process(delta):
-	if correct_out_screen == false:
-		if clicked_right == true:
-			score = score + 100
-			deleteparentboxes()
-			generatequestion()
-			generateorder()
-			nextshift = 1
-			
-		elif clicked_right == false:
-			hp = hp-1 
-			deleteparentboxes()
-			generatequestion()
-			generateorder()
-			nextshift = 1
-			
+	handle_result()
+	handle_generation()
+	update_ui()
+
+
+# =========================
+# ROUND CONTROL (IMMEDIATE)
+# =========================
+func start_round():
+	spawn_id += 1               # ❗ invalidate old waves
+	is_generating = false
+	deleteparentboxes()
+
+	generatequestion()
+	generateorder()
+
+	nextshift = 1
+	clicked_right = null
+	correct_out_screen = false
+
+
+func handle_result():
+	if clicked_right == null and not correct_out_screen:
+		return
+
+	if clicked_right == true:
+		score += 100
 	else:
-		hp = hp-1 
-		deleteparentboxes()
-		generatequestion()
-		generateorder()
-		nextshift = 1
-		
-	# Prevent duplicate calls
+		hp -= 1
+
+	start_round()
+
+
+# =========================
+# GENERATION CONTROL
+# =========================
+func handle_generation():
 	if is_generating:
 		return
-	
-	if nextshift == 1 and $parentboxes.get_child_count()==0:
-		is_generating = true
-		await get_tree().create_timer(0.5).timeout
-		await generateboxes1()
-		nextshift = 2
-		is_generating = false
-		
-	elif nextshift == 2 and $parentboxes.get_child_count()==0:
-		is_generating = true
-		await get_tree().create_timer(0.5).timeout
-		await generateboxes2()
-		is_generating = false
-		
-		
-		
-	$hplabel.text = "HP: " +str(hp)
-	$scorelabel.text = "SCORE: " + str(score)
-			
-	if hp <= 0:
-		print("gameover")
-		hp=5
 
+	if nextshift == 1 and $parentboxes.get_child_count() == 0:
+		is_generating = true
+		nextshift = 2
+		generateboxes1(spawn_id)
+
+	elif nextshift == 2 and $parentboxes.get_child_count() == 0:
+		is_generating = true
+		generateboxes2(spawn_id)
+
+
+# =========================
+# ASYNC-SAFE SPAWNING
+# =========================
+func generateboxes1(id):
+	if id != spawn_id:
+		return
+
+	generatebox(arrayorder[0], arraynumber[0])
+
+	await get_tree().create_timer(randi_range(1, 3)).timeout
+	if id != spawn_id:
+		return
+
+	generatebox(arrayorder[1], arraynumber[1])
+
+	await get_tree().create_timer(randi_range(1, 3)).timeout
+	if id != spawn_id:
+		return
+
+	generatebox(arrayorder[2], arraynumber[2])
+
+	is_generating = false
+
+
+func generateboxes2(id):
+	if id != spawn_id:
+		return
+
+	generatebox(arrayorder[3], arraynumber[3])
+
+	await get_tree().create_timer(randi_range(1, 3)).timeout
+	if id != spawn_id:
+		return
+
+	generatebox(arrayorder[4], arraynumber[4])
+
+	await get_tree().create_timer(randi_range(1, 3)).timeout
+	if id != spawn_id:
+		return
+
+	generatebox(arrayorder[5], arraynumber[5])
+
+	is_generating = false
+
+
+# =========================
+# QUESTION / DATA
+# =========================
 func get_wrong_numbers(erasednumber):
 	var numbers = [0,1,2,3,4,5,6,7,8,9,10]
-	# Remove forbidden number
 	numbers.erase(erasednumber)
-	# Randomize the order
 	numbers.shuffle()
 	return numbers
 
 
 func generatequestion():
-	clicked_right = null
-	correct_out_screen = false
-	
 	correctanswer = randi_range(0, 10)
 	var a = randi_range(0, correctanswer)
 	var b = correctanswer - a
-	
 	$questionlabel.text = str(a) + " + " + str(b) + " = ?"
-	
+
 	var numbers = get_wrong_numbers(correctanswer)
-	
-	arraynumber = [correctanswer, numbers[0], numbers[1], numbers[2],numbers[3], numbers[4]]
+	arraynumber = [
+		correctanswer,
+		numbers[0], numbers[1], numbers[2],
+		numbers[3], numbers[4]
+	]
 	arraynumber.shuffle()
-	
+
+
 func generateorder():
-	var array1 = ["left","center","right"]
-	array1.shuffle()
-	var array2 = ["left","center","right"]
-	array2.shuffle()	
-	
-	arrayorder = array1 + array2
+	var a1 = ["left", "center", "right"]
+	var a2 = ["left", "center", "right"]
+	a1.shuffle()
+	a2.shuffle()
+	arrayorder = a1 + a2
 
-func generateboxes1():
-	generatebox(arrayorder[0],arraynumber[0])
-	#print("a")
-	await get_tree().create_timer(randi_range(1,3)).timeout
-	generatebox(arrayorder[1], arraynumber[1])
-	#print("b")
-	await get_tree().create_timer(randi_range(1,3)).timeout
-	generatebox(arrayorder[2], arraynumber[2])
-	#print("c")
-	
-func generateboxes2():
-	generatebox(arrayorder[3],arraynumber[3])
-	#print("a")
-	await get_tree().create_timer(randi_range(1,3)).timeout
-	generatebox(arrayorder[4], arraynumber[4])
-	#print("b")
-	await get_tree().create_timer(randi_range(1,3)).timeout
-	generatebox(arrayorder[5], arraynumber[5])
-	#print("c")
 
+# =========================
+# BOX CREATION
+# =========================
 func generatebox(type, numberlabel):
-	var screen_size = get_viewport_rect().size
-	var gaps = ((screen_size.x - (160*3))/4) #1kotak width nya 160	
-	
-	fallbox = fallboxscene.instantiate()
-		
-	$parentboxes.add_child(fallbox)
-	
-	if type == "left" :
-		fallbox.position = Vector2(gaps+80,300)
-	elif type == "center" :
-		fallbox.position = Vector2(2*gaps+160+80,300)
-	else :
-		fallbox.position = Vector2(3*gaps+320+80,300)
-		
-	var s = randi_range(50, 100)
-	
-	fallbox.set_label(numberlabel)
-	fallbox.set_speed(s)
-	fallbox.connect("out_of_screen", box_out_of_screen)
-	fallbox.connect("button_pressed", box_pressed)
-	
-func deleteparentboxes():
-	for child in $parentboxes.get_children():
-		child.queue_free()
+	var box = fallboxscene.instantiate()
+	box.spawn_id = spawn_id     # 🔑 attach wave ID
+	$parentboxes.add_child(box)
 
-func box_out_of_screen(number):
+	if type == "left":
+		box.position = Vector2(gaps + 80, 300)
+	elif type == "center":
+		box.position = Vector2(2 * gaps + 160 + 80, 300)
+	else:
+		box.position = Vector2(3 * gaps + 320 + 80, 300)
+
+	box.set_label(numberlabel)
+	box.set_speed(randi_range(50, 100))
+	box.connect("out_of_screen", box_out_of_screen)
+	box.connect("button_pressed", box_pressed)
+
+
+# =========================
+# SIGNAL HANDLERS (SAFE)
+# =========================
+func box_out_of_screen(number, box_spawn_id):
+	if box_spawn_id != spawn_id:
+		return
+
 	if number == correctanswer:
 		correct_out_screen = true
-	
-func box_pressed(number):
+
+
+func box_pressed(number, box_spawn_id):
+	if box_spawn_id != spawn_id:
+		return
+
 	if number == correctanswer:
 		clicked_right = true
 	else:
 		clicked_right = false
-	
-	
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
+func deleteparentboxes():
+	for c in $parentboxes.get_children():
+		c.queue_free()
+
+
+func update_ui():
+	$hplabel.text = "HP: " + str(hp)
+	$scorelabel.text = "SCORE: " + str(score)
+
+	if hp <= 0:
+		print("gameover")
+		hp = 5

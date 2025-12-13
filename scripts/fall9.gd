@@ -57,6 +57,13 @@ func _process(delta):
 		generatequestion()
 		generateorder()
 		nextshift = 1
+
+	$hplabel.text = "HP: " +str(hp)
+	$scorelabel.text = "SCORE: " + str(score)
+			
+	if hp <= 0:
+		print("gameover")
+		hp=5
 		
 	# Prevent duplicate calls
 	if is_generating:
@@ -83,12 +90,7 @@ func _process(delta):
 		is_generating = false
 			
 		
-	$hplabel.text = "HP: " +str(hp)
-	$scorelabel.text = "SCORE: " + str(score)
-			
-	if hp <= 0:
-		print("gameover")
-		hp=5
+
 
 func get_wrong_numbers(erasednumber):
 	var numbers = [0,1,2,3,4,5,6,7,8,9,10]
