@@ -75,6 +75,7 @@ func handle_generation():
 
 	elif nextshift == 2 and $parentboxes.get_child_count() == 0:
 		is_generating = true
+		nextshift = 3
 		generateboxes2(spawn_id)
 
 
@@ -140,11 +141,9 @@ func generatequestion():
 	$questionlabel.text = str(a) + " + " + str(b) + " = ?"
 
 	var numbers = get_wrong_numbers(correctanswer)
-	arraynumber = [
-		correctanswer,
-		numbers[0], numbers[1], numbers[2],
-		numbers[3], numbers[4]
-	]
+	
+	arraynumber = numbers.slice(0,5)
+	arraynumber.append(correctanswer)
 	arraynumber.shuffle()
 
 
@@ -189,8 +188,8 @@ func box_out_of_screen(number, box_spawn_id):
 
 
 func box_pressed(number, box_spawn_id):
-	if box_spawn_id != spawn_id:
-		return
+#	if box_spawn_id != spawn_id:
+#		return
 
 	if number == correctanswer:
 		clicked_right = true
