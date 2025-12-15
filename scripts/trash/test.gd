@@ -3,17 +3,19 @@ extends Node2D
 var objscene: PackedScene = load("res://scenes/obj.tscn")
 
 const COLORS = [
-	Color("#e74c3c"), # red
-	Color("#f1c40f"), # yellow
-	Color("#2ecc71"), # green
-	Color("#3498db"), # blue
-	Color("#9b59b6"), # purple
-	Color("#1abc9c"), # cyan
-	Color("#e67e22"), # orange
-	Color("#ecf0f1"), # white
-	Color("#95a5a6"), # gray
-	Color("#34495e")  # dark blue
+	Color("#E74C3C"),
+	Color("#3498DB"),
+	Color("#2ECC71"),
+	Color("#F1C40F"),
+	Color("#9B59B6"),
+	Color("#E67E22"),
+	Color("#1ABC9C"),
+	Color("#FF69B4"),
+	Color("#A3E635"),
+	Color("#EC4899")# dark blue
 ]
+
+
 
 
 # Called when the node enters the scene tree for the first time.

@@ -1,6 +1,6 @@
 extends Node2D
 
-var fallboxscene: PackedScene = load("res://scenes/fallbox.tscn")
+var fallboxscene: PackedScene = load("res://scenes/box.tscn")
 
 var hp := 5
 var score := 0
@@ -18,6 +18,19 @@ var clicked_right = null
 
 var screen_size
 var gaps
+
+const COLORS = [
+	Color("#E74C3C"),
+	Color("#3498DB"),
+	Color("#2ECC71"),
+	Color("#F1C40F"),
+	Color("#9B59B6"),
+	Color("#E67E22"),
+	Color("#1ABC9C"),
+	Color("#FF69B4"),
+	Color("#A3E635"),
+	Color("#EC4899")# dark blue
+]
 
 
 func _ready():
@@ -172,6 +185,10 @@ func generatebox(type, numberlabel):
 
 	box.set_label(numberlabel)
 	box.set_speed(randi_range(50, 100))
+
+	var index = int (str(numberlabel)[-1]) #get last index of numberlabel
+	box.setup(COLORS[index])
+
 	box.connect("out_of_screen", box_out_of_screen)
 	box.connect("button_pressed", box_pressed)
 

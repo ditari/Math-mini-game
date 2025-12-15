@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://qmsjy4ip2pds"]
+
+[ext_resource type="Script" path="res://scripts/box.gd" id="1_1ciay"]
+[ext_resource type="Texture2D" uid="uid://6otdyf68gqfw" path="res://assets/box-inside.png" id="2_oecx6"]
+[ext_resource type="Texture2D" uid="uid://kal3lqtjciks" path="res://assets/box-border.png" id="3_83ufv"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_1ciay")
+
+[node name="box-inside" type="Sprite2D" parent="."]
+texture = ExtResource("2_oecx6")
+
+[node name="box-border" type="Sprite2D" parent="."]
+texture = ExtResource("3_83ufv")
+
+[node name="label" type="Label" parent="box-border"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -64.0
+offset_right = -64.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 70
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
