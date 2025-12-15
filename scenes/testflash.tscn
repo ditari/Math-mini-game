@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=3 uid="uid://bsw10cusj7me2"]
+
+[ext_resource type="Script" path="res://scripts/testflash.gd" id="1_p5t6i"]
+[ext_resource type="Texture2D" uid="uid://c67nn3ta8o6n2" path="res://assets/bg.png" id="2_tpenk"]
+[ext_resource type="Script" path="res://scripts/bg.gd" id="3_qxmds"]
+[ext_resource type="Script" path="res://scripts/CanvasLayer.gd" id="4_27uwr"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_p5t6i")
+
+[node name="bg" type="Sprite2D" parent="."]
+texture = ExtResource("2_tpenk")
+script = ExtResource("3_qxmds")
+
+[node name="parentboxes" type="Node2D" parent="."]
+
+[node name="questionlabel" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = 79.0
+offset_right = 731.0
+offset_bottom = 157.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 80
+text = "test"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="hplabel" type="Label" parent="."]
+offset_right = 164.0
+offset_bottom = 72.0
+theme_override_font_sizes/font_size = 50
+text = "HP"
+
+[node name="scorelabel" type="Label" parent="."]
+offset_left = 445.0
+offset_right = 712.0
+offset_bottom = 72.0
+theme_override_font_sizes/font_size = 50
+text = "100
+"
+horizontal_alignment = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("4_27uwr")
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
