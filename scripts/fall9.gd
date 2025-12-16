@@ -178,9 +178,9 @@ func generatequestion():
 		var b = correctanswer - a
 		$questionlabel.text = str(a) + " + " + str(b) + " = ?"
 	elif op == 2:
-		var a = randi_range(0, 10)
-		var b =  randi_range(0, a)
-		correctanswer = a - b
+		correctanswer = randi_range(0, 10)
+		var b = randi_range(0, 10)
+		var a = b + correctanswer
 		$questionlabel.text = str(a) + " - " + str(b) + " = ?"
 		
 	var numbers = get_wrong_numbers(correctanswer)

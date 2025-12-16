@@ -108,14 +108,14 @@ func generate_wave(id):
 # QUESTION / DATA
 # =========================
 func get_wrong_numbers(erasednumber):
-	var numbers = [0,1,2,3,4,5]
+	var numbers = [0,1,2,3,4,5,6,7,8,9,10]
 	numbers.erase(erasednumber)
 	numbers.shuffle()
 	return numbers
 
 
 func generatequestion():
-	correctanswer = randi_range(0, 5)
+	correctanswer = randi_range(0, 10)
 	var a = randi_range(0, correctanswer)
 	var b = correctanswer - a
 	$questionlabel.text = str(a) + " + " + str(b) + " = ?"

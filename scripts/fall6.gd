@@ -148,10 +148,17 @@ func get_wrong_numbers(erasednumber):
 
 
 func generatequestion():
-	correctanswer = randi_range(0, 10)
-	var a = randi_range(0, correctanswer)
-	var b = correctanswer - a
-	$questionlabel.text = str(a) + " + " + str(b) + " = ?"
+	var op = randi_range(1,2)
+	if op == 1: #penjumlahan
+		correctanswer = randi_range(0, 10)
+		var a = randi_range(0, correctanswer)
+		var b = correctanswer - a
+		$questionlabel.text = str(a) + " + " + str(b) + " = ?"
+	elif op == 2:
+		var a = randi_range(0, 10)
+		var b = randi_range(0, a)
+		correctanswer = a - b
+		$questionlabel.text = str(a) + " - " + str(b) + " = ?"
 
 	var numbers = get_wrong_numbers(correctanswer)
 	
