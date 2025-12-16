@@ -72,7 +72,7 @@ func handle_result():
 		glow_screen_soft()
 		score += 100
 	else:
-		flash_screen(Color.RED)
+		shake()
 		hp -= 1
 
 	start_round()
@@ -265,26 +265,12 @@ func update_ui():
 		hp = 5
 
 # =========================
-# flash screen
+# flash screen and shake
 # =========================
 
 func _stop_flash():
 	if flash_tween and flash_tween.is_running():
 		flash_tween.kill()
-
-func flash_screen(color := Color(1, 0.3, 0.3), duration := 0.08):
-	_stop_flash()
-
-	flash_rect.color = color
-	flash_rect.modulate.a = 0.75
-
-	flash_tween = create_tween()
-	flash_tween.tween_property(
-		flash_rect,
-		"modulate:a",
-		0.0,
-		duration
-	).set_trans(Tween.TRANS_LINEAR)
 
 func glow_screen_soft():
 	_stop_flash()
@@ -297,3 +283,26 @@ func glow_screen_soft():
 	flash_tween.tween_property(flash_rect, "modulate:a", 0.0, 0.4)\
 		.set_trans(Tween.TRANS_SINE)\
 		.set_ease(Tween.EASE_OUT)
+
+func shake(strength := 6.0, duration := 0.15):
+	var original_pos := position
+
+	var tween := create_tween()
+	tween.tween_property(
+		self,
+		"position",
+		original_pos + Vector2(strength, 0),
+		0.04
+	)
+	tween.tween_property(
+		self,
+		"position",
+		original_pos - Vector2(strength, 0),
+		0.04
+	)
+	tween.tween_property(
+		self,
+		"position",
+		original_pos,
+		duration
+	).set_ease(Tween.EASE_OUT)
