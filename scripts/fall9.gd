@@ -171,11 +171,18 @@ func get_wrong_numbers(erasednumber):
 
 
 func generatequestion():
-	correctanswer = randi_range(0, 10)
-	var a = randi_range(0, correctanswer)
-	var b = correctanswer - a
-	$questionlabel.text = str(a) + " + " + str(b) + " = ?"
-
+	var op = randi_range(1,2)
+	if op == 1: #penjumlahan
+		correctanswer = randi_range(0, 10)
+		var a = randi_range(0, correctanswer)
+		var b = correctanswer - a
+		$questionlabel.text = str(a) + " + " + str(b) + " = ?"
+	elif op == 2:
+		var a = randi_range(0, 10)
+		var b =  randi_range(0, a)
+		correctanswer = a - b
+		$questionlabel.text = str(a) + " - " + str(b) + " = ?"
+		
 	var numbers = get_wrong_numbers(correctanswer)
 	
 	arraynumber = numbers.slice(0,8)
@@ -209,7 +216,7 @@ func generatebox(type, numberlabel):
 		box.position = Vector2(3 * gaps + 320 + 80, 300)
 
 	box.set_label(numberlabel)
-	box.set_speed(randi_range(50, 100))
+	box.set_speed(randi_range(150, 200))
 	
 	var index = int (str(numberlabel)[-1])
 	box.setup(COLORS[index])

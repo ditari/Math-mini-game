@@ -184,8 +184,8 @@ func generatebox(type, numberlabel):
 		box.position = Vector2(3 * gaps + 320 + 80, 300)
 
 	box.set_label(numberlabel)
-	box.set_speed(randi_range(50, 100))
-
+	box.set_speed(randi_range(100, 150))
+	
 	var index = int (str(numberlabel)[-1]) #get last index of numberlabel
 	box.setup(COLORS[index])
 
