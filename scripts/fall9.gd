@@ -1,5 +1,8 @@
 extends Node2D
 
+@onready var flash_rect := $CanvasLayer/Control/ColorRect
+var flash_tween: Tween
+
 var fallboxscene: PackedScene = load("res://scenes/box.tscn")
 
 var hp := 5
@@ -66,8 +69,10 @@ func handle_result():
 		return
 
 	if clicked_right == true:
+		glow_screen_soft()
 		score += 100
 	else:
+		flash_screen(Color.RED)
 		hp -= 1
 
 	start_round()
@@ -258,3 +263,37 @@ func update_ui():
 	if hp <= 0:
 		print("gameover")
 		hp = 5
+
+# =========================
+# flash screen
+# =========================
+
+func _stop_flash():
+	if flash_tween and flash_tween.is_running():
+		flash_tween.kill()
+
+func flash_screen(color := Color(1, 0.3, 0.3), duration := 0.08):
+	_stop_flash()
+
+	flash_rect.color = color
+	flash_rect.modulate.a = 0.75
+
+	flash_tween = create_tween()
+	flash_tween.tween_property(
+		flash_rect,
+		"modulate:a",
+		0.0,
+		duration
+	).set_trans(Tween.TRANS_LINEAR)
+
+func glow_screen_soft():
+	_stop_flash()
+
+	flash_rect.color = Color(0.9, 1, 0.9)
+	flash_rect.modulate.a = 0.05
+
+	flash_tween = create_tween()
+	flash_tween.tween_property(flash_rect, "modulate:a", 0.1, 0.08)
+	flash_tween.tween_property(flash_rect, "modulate:a", 0.0, 0.4)\
+		.set_trans(Tween.TRANS_SINE)\
+		.set_ease(Tween.EASE_OUT)

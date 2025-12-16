@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://cs1rmuc6sj68f"]
+[gd_scene load_steps=5 format=3 uid="uid://cs1rmuc6sj68f"]
 
 [ext_resource type="Script" path="res://scripts/fall3.gd" id="1_5yjdf"]
 [ext_resource type="Texture2D" uid="uid://c67nn3ta8o6n2" path="res://assets/bg.png" id="2_suykk"]
 [ext_resource type="Script" path="res://scripts/bg.gd" id="3_o10oe"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_stqpd"]
+blend_mode = 1
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_5yjdf")
@@ -10,6 +13,28 @@ script = ExtResource("1_5yjdf")
 [node name="bg" type="Sprite2D" parent="."]
 texture = ExtResource("2_suykk")
 script = ExtResource("3_o10oe")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control"]
+material = SubResource("CanvasItemMaterial_stqpd")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
 
 [node name="parentboxes" type="Node2D" parent="."]
 
