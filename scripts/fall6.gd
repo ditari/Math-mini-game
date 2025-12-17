@@ -3,6 +3,10 @@ extends Node2D
 @onready var flash_rect := $CanvasLayer/Control/ColorRect
 var flash_tween: Tween
 
+@onready var questionlabel = $CanvasLayer/Control/questionlabel
+@onready var hplabel = $hplabel
+@onready var scorelabel = $CanvasLayer/Control/scorelabel
+
 var fallboxscene: PackedScene = load("res://scenes/box.tscn")
 
 var hp := 5
@@ -23,16 +27,17 @@ var screen_size
 var gaps
 
 const COLORS = [
-	Color("#E74C3C"),
-	Color("#3498DB"),
+	Color("#E11D48"),
+	Color("#1D4ED8"),
 	Color("#2ECC71"),
-	Color("#F1C40F"),
+	Color("#FFD800"),
 	Color("#9B59B6"),
-	Color("#E67E22"),
-	Color("#1ABC9C"),
+	
+	Color("#FF6A00"),
+	Color("#1F8F2E"),
 	Color("#FF69B4"),
-	Color("#A3E635"),
-	Color("#EC4899")# dark blue
+	Color("#A8A29E"),
+	Color("#38BDF8")
 ]
 
 
@@ -158,12 +163,12 @@ func generatequestion():
 		correctanswer = randi_range(0, 10)
 		var a = randi_range(0, correctanswer)
 		var b = correctanswer - a
-		$questionlabel.text = str(a) + " + " + str(b) + " = ?"
+		questionlabel.text = str(a) + " + " + str(b) + " = ?"
 	elif op == 2:
 		var a = randi_range(0, 10)
 		var b = randi_range(0, a)
 		correctanswer = a - b
-		$questionlabel.text = str(a) + " - " + str(b) + " = ?"
+		questionlabel.text = str(a) + " - " + str(b) + " = ?"
 
 	var numbers = get_wrong_numbers(correctanswer)
 	
@@ -232,8 +237,8 @@ func deleteparentboxes():
 
 
 func update_ui():
-	$hplabel.text = "HP: " + str(hp)
-	$scorelabel.text = "SCORE: " + str(score)
+	hplabel.text = "HP: " + str(hp)
+	scorelabel.text = "SCORE: " + str(score)
 
 	if hp <= 0:
 		print("gameover")
