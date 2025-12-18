@@ -3,9 +3,9 @@ extends Node2D
 @onready var flash_rect := $CanvasLayer/Control/ColorRect
 var flash_tween: Tween
 
-@onready var questionlabel =$CanvasLayer/Control/questionlabel
+@onready var questionlabel =$CanvasLayer/Control/PanelContainer/questionlabel
 @onready var hplabel = $hplabel
-@onready var scorelabel = $CanvasLayer/Control/scorelabel
+@onready var scorelabel = $CanvasLayer/Control/PanelContainer2/scorelabel
 
 var fallboxscene: PackedScene = load("res://scenes/box.tscn")
 
@@ -25,19 +25,6 @@ var clicked_right = null
 var screen_size
 var gaps
 
-const COLORS = [
-	Color("#E11D48"),
-	Color("#1D4ED8"),
-	Color("#2ECC71"),
-	Color("#FFD800"),
-	Color("#9B59B6"),
-	
-	Color("#FF6A00"),
-	Color("#1F8F2E"),
-	Color("#FF69B4"),
-	Color("#A8A29E"),
-	Color("#38BDF8")
-]
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -153,20 +140,23 @@ func generateorder():
 func generatebox(type, numberlabel):
 	var box = fallboxscene.instantiate()
 	box.spawn_id = spawn_id
+	
 	$parentboxes.add_child(box)
 
 	if type == "left":
-		box.position = Vector2(gaps + 80, 300)
+		box.position = Vector2(gaps + 80, 425)
 	elif type == "center":
-		box.position = Vector2(2 * gaps + 160 + 80, 300)
+		box.position = Vector2(2 * gaps + 160 + 80, 425)
 	else:
-		box.position = Vector2(3 * gaps + 320 + 80, 300)
+		box.position = Vector2(3 * gaps + 320 + 80, 425)
 
 	box.set_label(numberlabel)
 	box.set_speed(randi_range(50, 100))
 	
-	var index = int (str(numberlabel)[-1])
-	box.setup(COLORS[index])
+	var index = str(numberlabel)[-1]
+	#box.setup(COLORS[index])
+	box.get_node("AnimatedSprite2D").play(index)
+	box.scale = Vector2(0.7, 0.7)
 	
 	box.connect("out_of_screen", box_out_of_screen)
 	box.connect("button_pressed", box_pressed)

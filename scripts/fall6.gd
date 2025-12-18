@@ -26,19 +26,6 @@ var clicked_right = null
 var screen_size
 var gaps
 
-const COLORS = [
-	Color("#E11D48"),
-	Color("#1D4ED8"),
-	Color("#2ECC71"),
-	Color("#FFD800"),
-	Color("#9B59B6"),
-	
-	Color("#FF6A00"),
-	Color("#1F8F2E"),
-	Color("#FF69B4"),
-	Color("#A8A29E"),
-	Color("#38BDF8")
-]
 
 
 func _ready():
@@ -203,8 +190,10 @@ func generatebox(type, numberlabel):
 	box.set_label(numberlabel)
 	box.set_speed(randi_range(100, 150))
 	
-	var index = int (str(numberlabel)[-1]) #get last index of numberlabel
-	box.setup(COLORS[index])
+	var index = str(numberlabel)[-1]
+	#box.setup(COLORS[index])
+	box.get_node("AnimatedSprite2D").play(index)
+	box.scale = Vector2(0.7, 0.7)
 
 	box.connect("out_of_screen", box_out_of_screen)
 	box.connect("button_pressed", box_pressed)

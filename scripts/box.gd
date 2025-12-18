@@ -1,7 +1,6 @@
 extends Node2D
 
-@onready var label = $"box-border/label"
-@onready var sprite: Sprite2D = $"box-inside"
+@onready var label = $AnimatedSprite2D/label
 
 signal button_pressed(number, spawn_id)
 signal out_of_screen(number, spawn_id)
@@ -14,9 +13,9 @@ var spawn_id := 0   # 🔑 ADD THIS
 func set_label(t):
 	label.text = str(t)
 	number = t
-
-func setup(color: Color):
-	sprite.modulate = color
+#
+#func setup(color: Color):
+#	sprite.modulate = color
 
 func set_speed(s):
 	speed = s
