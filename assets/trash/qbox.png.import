@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://y6a50t5muwue"
-path="res://.godot/imported/qbox.png-ec34fcab1b1c4a922a25f209dcdf07cd.ctex"
+path="res://.godot/imported/qbox.png-8397bc0e23949823cac0c9dd638fb3f4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/qbox.png"
-dest_files=["res://.godot/imported/qbox.png-ec34fcab1b1c4a922a25f209dcdf07cd.ctex"]
+source_file="res://assets/trash/qbox.png"
+dest_files=["res://.godot/imported/qbox.png-8397bc0e23949823cac0c9dd638fb3f4.ctex"]
 
 [params]
 

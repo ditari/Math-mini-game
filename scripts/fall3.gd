@@ -8,6 +8,10 @@ var flash_tween: Tween
 @onready var scorelabel = $CanvasLayer/Control/PanelContainer2/scorelabel
 
 var fallboxscene: PackedScene = load("res://scenes/box.tscn")
+const box_width := 206 #untuk scale 0.7
+var box_x 
+var box_y = 425 #awal box jatuh
+var gaps
 
 var hp := 5
 var score := 0
@@ -22,13 +26,15 @@ var correctanswer := 0
 var correct_out_screen := false
 var clicked_right = null
 
-var screen_size
-var gaps
+#var screen_size
+#var gaps
 
 
 func _ready():
-	screen_size = get_viewport_rect().size
-	gaps = ((screen_size.x - (160 * 3)) / 4)
+	#screen_size = get_viewport_rect().size
+	var screen_width := get_viewport_rect().size.x
+	gaps = (screen_width - 3 * box_width) / (3 + 1) #gaps untuk 3 boxes
+	
 	randomize()
 	start_round()
 
@@ -144,11 +150,13 @@ func generatebox(type, numberlabel):
 	$parentboxes.add_child(box)
 
 	if type == "left":
-		box.position = Vector2(gaps + 80, 425)
+		box_x = gaps + box_width / 2 + 0 * (box_width + gaps)
 	elif type == "center":
-		box.position = Vector2(2 * gaps + 160 + 80, 425)
+		box_x = gaps + box_width / 2 + 1 * (box_width + gaps)
 	else:
-		box.position = Vector2(3 * gaps + 320 + 80, 425)
+		box_x = gaps + box_width / 2 + 2 * (box_width + gaps)
+	
+	box.position = Vector2(box_x, box_y)
 
 	box.set_label(numberlabel)
 	box.set_speed(randi_range(50, 100))
@@ -156,7 +164,6 @@ func generatebox(type, numberlabel):
 	var index = str(numberlabel)[-1]
 	#box.setup(COLORS[index])
 	box.get_node("AnimatedSprite2D").play(index)
-	box.scale = Vector2(0.7, 0.7)
 	
 	box.connect("out_of_screen", box_out_of_screen)
 	box.connect("button_pressed", box_pressed)

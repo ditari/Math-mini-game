@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwe1t2vsoucof"
-path="res://.godot/imported/color pallete new.png-0b51db08ed4c9f7a170baeb651571481.ctex"
+uid="uid://5elfyawdostq"
+path="res://.godot/imported/bg2.png-4c3cf901c63d8439eb6b95d7b7cbb5b1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/color pallete new.png"
-dest_files=["res://.godot/imported/color pallete new.png-0b51db08ed4c9f7a170baeb651571481.ctex"]
+source_file="res://assets/trash/bg2.png"
+dest_files=["res://.godot/imported/bg2.png-4c3cf901c63d8439eb6b95d7b7cbb5b1.ctex"]
 
 [params]
 
