@@ -1,29 +1,24 @@
 extends Node2D
 
-var fallboxscene: PackedScene = load("res://scenes/testbox.tscn")
+@onready var heart_bar := $CanvasLayer/HeartBar
+var max_hp := 3
+var current_hp := 3
+var heart_scene: PackedScene = preload("res://scenes/heart.tscn")
 
-const box_width := 206 #untuk scale 0.7 atau 0.75
-var count := 3
-var y := 520   # vertical position of boxes
-
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	var screen_width := get_viewport_rect().size.x
+	setup_hearts()
 
-	var gap := (screen_width - count * box_width) / (count + 1)
+func setup_hearts():
+	for child in heart_bar.get_children():
+		child.queue_free()
 
-	for i in range(count):
-		var box = fallboxscene.instantiate()
-		add_child(box)
+	for i in range(max_hp):
+		var heart = heart_scene.instantiate()
+		heart_bar.add_child(heart)
 
-		box.position = Vector2(
-			gap + box_width / 2 + i * (box_width + gap),
-			y
-		)
+	update_hearts()
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func update_hearts():
+	for i in range(heart_bar.get_child_count()):
+		var heart = heart_bar.get_child(i)
+		heart.visible = i < current_hp

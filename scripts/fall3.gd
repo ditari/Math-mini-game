@@ -4,15 +4,18 @@ extends Node2D
 var flash_tween: Tween
 
 @onready var questionlabel =$CanvasLayer/Control/PanelContainer/questionlabel
-@onready var hplabel = $hplabel
 @onready var scorelabel = $CanvasLayer/Control/PanelContainer2/scorelabel
 
-var fallboxscene: PackedScene = load("res://scenes/box.tscn")
+@onready var heart_bar := $CanvasLayer/heartbar
+var heartscene: PackedScene = preload("res://scenes/heart.tscn")
+
+var fallboxscene: PackedScene = preload("res://scenes/box.tscn")
 const box_width := 206 #untuk scale 0.7
 var box_x 
 var box_y = 425 #awal box jatuh
 var gaps
 
+var maxhp := 5
 var hp := 5
 var score := 0
 
@@ -35,6 +38,7 @@ func _ready():
 	var screen_width := get_viewport_rect().size.x
 	gaps = (screen_width - 3 * box_width) / (3 + 1) #gaps untuk 3 boxes
 	
+	setup_hearts()
 	randomize()
 	start_round()
 
@@ -43,6 +47,25 @@ func _process(delta):
 	handle_result()
 	handle_generation()
 	update_ui()
+
+
+# =========================
+# heart bar
+# =========================
+func setup_hearts():
+	for child in heart_bar.get_children():
+		child.queue_free()
+
+	for i in range(maxhp):
+		var heart = heartscene.instantiate()
+		heart_bar.add_child(heart)
+
+	update_hearts()
+
+func update_hearts():
+	for i in range(heart_bar.get_child_count()):
+		var heart = heart_bar.get_child(i)
+		heart.visible = i < hp
 
 
 # =========================
@@ -72,6 +95,7 @@ func handle_result():
 		shake()
 		#flash_screen(Color.RED)
 		hp -= 1
+		#update_hearts()
 
 	start_round()
 
@@ -198,12 +222,14 @@ func deleteparentboxes():
 
 
 func update_ui():
-	hplabel.text = "HP: " + str(hp)
+	#hplabel.text = "HP: " + str(hp)
 	scorelabel.text = "SCORE: " + str(score)
 
 	if hp <= 0:
 		print("gameover")
 		hp = 5
+		
+	update_hearts()
 
 # =========================
 # flash screen and shake

@@ -7,7 +7,7 @@ var flash_tween: Tween
 @onready var hplabel = $hplabel
 @onready var scorelabel = $CanvasLayer/Control/scorelabel
 
-var fallboxscene: PackedScene = load("res://scenes/box.tscn")
+var fallboxscene: PackedScene = preload("res://scenes/box.tscn")
 const box_width := 206 #untuk scale 0.7
 var box_x 
 var box_y = 425 #awal box jatuh

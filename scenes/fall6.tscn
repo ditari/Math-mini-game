@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bupsmhyrefnpy"]
 
 [ext_resource type="Script" path="res://scripts/fall6.gd" id="1_g6yyh"]
-[ext_resource type="Texture2D" uid="uid://c67nn3ta8o6n2" path="res://assets/trash/bg.png" id="2_1mu4c"]
+[ext_resource type="Texture2D" uid="uid://c3qnnqatrvwgr" path="res://assets/bg4.png" id="2_2ettc"]
 [ext_resource type="Script" path="res://scripts/bg.gd" id="3_vqwe6"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_uiq26"]
@@ -11,7 +11,7 @@ blend_mode = 1
 script = ExtResource("1_g6yyh")
 
 [node name="bg" type="Sprite2D" parent="."]
-texture = ExtResource("2_1mu4c")
+texture = ExtResource("2_2ettc")
 script = ExtResource("3_vqwe6")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
