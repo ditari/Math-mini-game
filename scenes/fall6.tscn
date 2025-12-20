@@ -36,30 +36,37 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(1, 1, 1, 0)
 
-[node name="questionlabel" type="Label" parent="CanvasLayer/Control"]
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -92.5
-offset_top = 50.0
-offset_right = 92.5
-offset_bottom = 190.0
+offset_right = 112.5
+offset_bottom = 150.0
 grow_horizontal = 2
+
+[node name="questionlabel" type="Label" parent="CanvasLayer/Control/PanelContainer"]
+layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 100
 text = "test"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="scorelabel" type="Label" parent="CanvasLayer/Control"]
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -267.0
-offset_bottom = 72.0
+offset_left = -107.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 92.0
 grow_horizontal = 0
+
+[node name="scorelabel" type="Label" parent="CanvasLayer/Control/PanelContainer2"]
+layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "100
 "

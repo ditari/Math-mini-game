@@ -51,6 +51,8 @@ func start_round():
 	spawn_id += 1               # ❗ invalidate old waves
 	is_generating = false
 	deleteparentboxes()
+	
+	
 
 	generatequestion()
 	generateorder()

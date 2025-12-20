@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d14pkgrgkjbix"
+path="res://.godot/imported/edit - 415764__thebuilder15__wrong.wav-7a0758a7a5e766dbd71ee65b3594f594.sample"
+
+[deps]
+
+source_file="res://assets/sounds/edit - 415764__thebuilder15__wrong.wav"
+dest_files=["res://.godot/imported/edit - 415764__thebuilder15__wrong.wav-7a0758a7a5e766dbd71ee65b3594f594.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -22,6 +22,7 @@ var score := 0
 var arraynumber := []
 var arrayorder := []
 
+var nextshift = 1 #ga dipakai di fall3
 var is_generating := false
 var spawn_id := 0   # 🔑 wave/version ID
 
@@ -37,17 +38,18 @@ func _ready():
 	#screen_size = get_viewport_rect().size
 	var screen_width := get_viewport_rect().size.x
 	gaps = (screen_width - 3 * box_width) / (3 + 1) #gaps untuk 3 boxes
+	AudioController.play_bgm()
 	
 	setup_hearts()
 	randomize()
 	start_round()
+	
 
 
 func _process(delta):
 	handle_result()
 	handle_generation()
 	update_ui()
-
 
 # =========================
 # heart bar
@@ -67,6 +69,114 @@ func update_hearts():
 		var heart = heart_bar.get_child(i)
 		heart.visible = i < hp
 
+# =========================
+# flash screen and shake
+# =========================
+
+func _stop_flash():
+	if flash_tween and flash_tween.is_running():
+		flash_tween.kill()
+
+func glow_screen_soft():
+	_stop_flash()
+
+	flash_rect.color = Color(0.9, 1, 0.9)
+	flash_rect.modulate.a = 0.05
+
+	flash_tween = create_tween()
+	flash_tween.tween_property(flash_rect, "modulate:a", 0.1, 0.08)
+	flash_tween.tween_property(flash_rect, "modulate:a", 0.0, 0.4)\
+		.set_trans(Tween.TRANS_SINE)\
+		.set_ease(Tween.EASE_OUT)
+		
+func shake(strength := 6.0, duration := 0.15):
+	var original_pos := position
+
+	var tween := create_tween()
+	tween.tween_property(
+		self,
+		"position",
+		original_pos + Vector2(strength, 0),
+		0.04
+	)
+	tween.tween_property(
+		self,
+		"position",
+		original_pos - Vector2(strength, 0),
+		0.04
+	)
+	tween.tween_property(
+		self,
+		"position",
+		original_pos,
+		duration
+	).set_ease(Tween.EASE_OUT)
+	
+# =========================
+# SIGNALS
+# =========================
+func box_out_of_screen(number, box_spawn_id):
+	if box_spawn_id != spawn_id:
+		return
+
+	if number == correctanswer:
+		correct_out_screen = true
+
+
+func box_pressed(number, box_spawn_id):
+#	if box_spawn_id != spawn_id:
+#		return
+
+	if number == correctanswer:
+		clicked_right = true
+	else:
+		clicked_right = false
+		
+# =========================
+# other functions
+# =========================		
+	
+		
+func deleteparentboxes():
+	for c in $parentboxes.get_children():
+		c.queue_free()
+
+
+func update_ui():
+	#hplabel.text = "HP: " + str(hp)
+	scorelabel.text = "SCORE: " + str(score)
+
+	#harusnya updatehearts dulu baru gameover
+	if hp <= 0:
+		print("gameover")
+		hp = 5
+		
+	update_hearts()
+
+func get_wrong_numbers(erasednumber):
+	var numbers = [0,1,2,3,4,5,6,7,8,9,10]
+	numbers.erase(erasednumber)
+	numbers.shuffle()
+	return numbers
+
+func handle_result():
+	if clicked_right == null and not correct_out_screen:
+		return
+
+	if clicked_right == true:
+		glow_screen_soft()
+		AudioController.play_correct()
+		score += 100
+	else:
+		shake()
+		AudioController.play_wrong()
+		hp -= 1
+
+
+	start_round()
+
+#====================================================dari sini isinya beda
+
 
 # =========================
 # ROUND CONTROL
@@ -83,21 +193,7 @@ func start_round():
 	correct_out_screen = false
 
 
-func handle_result():
-	if clicked_right == null and not correct_out_screen:
-		return
 
-	if clicked_right == true:
-		#glow_screen(Color(0.8, 1, 0.8))
-		glow_screen_soft()
-		score += 100
-	else:
-		shake()
-		#flash_screen(Color.RED)
-		hp -= 1
-		#update_hearts()
-
-	start_round()
 
 
 # =========================
@@ -109,10 +205,10 @@ func handle_generation():
 
 	if $parentboxes.get_child_count() == 0:
 		is_generating = true
-		generate_wave(spawn_id)
+		generate_boxes(spawn_id)
 
 
-func generate_wave(id):
+func generate_boxes(id):
 	if id != spawn_id:
 		return
 
@@ -136,11 +232,7 @@ func generate_wave(id):
 # =========================
 # QUESTION / DATA
 # =========================
-func get_wrong_numbers(erasednumber):
-	var numbers = [0,1,2,3,4,5,6,7,8,9,10]
-	numbers.erase(erasednumber)
-	numbers.shuffle()
-	return numbers
+
 
 
 func generatequestion():
@@ -193,113 +285,4 @@ func generatebox(type, numberlabel):
 	box.connect("button_pressed", box_pressed)
 
 
-# =========================
-# SIGNALS
-# =========================
-func box_out_of_screen(number, box_spawn_id):
-	if box_spawn_id != spawn_id:
-		return
 
-	if number == correctanswer:
-		correct_out_screen = true
-
-
-func box_pressed(number, box_spawn_id):
-#	if box_spawn_id != spawn_id:
-#		return
-
-	if number == correctanswer:
-		clicked_right = true
-	else:
-		clicked_right = false
-		
-		
-
-
-func deleteparentboxes():
-	for c in $parentboxes.get_children():
-		c.queue_free()
-
-
-func update_ui():
-	#hplabel.text = "HP: " + str(hp)
-	scorelabel.text = "SCORE: " + str(score)
-
-	if hp <= 0:
-		print("gameover")
-		hp = 5
-		
-	update_hearts()
-
-# =========================
-# flash screen and shake
-# =========================
-
-func _stop_flash():
-	if flash_tween and flash_tween.is_running():
-		flash_tween.kill()
-
-#func flash_screen(color := Color(1, 0.3, 0.3), duration := 0.08):
-#	_stop_flash()
-#
-#	flash_rect.color = color
-#	flash_rect.modulate.a = 0.75
-#
-#	flash_tween = create_tween()
-#	flash_tween.tween_property(
-#		flash_rect,
-#		"modulate:a",
-#		0.0,
-#		duration
-#	).set_trans(Tween.TRANS_LINEAR)
-
-
-#func glow_screen(color := Color(0.85, 1, 0.85), duration := 0.25, intensity := 0.15):
-#	_stop_flash()
-#
-#	flash_rect.color = color
-#	flash_rect.modulate.a = intensity
-#
-#	flash_tween = create_tween()
-#	flash_tween.tween_interval(0.05) # small hold
-#	flash_tween.tween_property(
-#		flash_rect,
-#		"modulate:a",
-#		0.0,
-#		duration
-#	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-
-func glow_screen_soft():
-	_stop_flash()
-
-	flash_rect.color = Color(0.9, 1, 0.9)
-	flash_rect.modulate.a = 0.05
-
-	flash_tween = create_tween()
-	flash_tween.tween_property(flash_rect, "modulate:a", 0.1, 0.08)
-	flash_tween.tween_property(flash_rect, "modulate:a", 0.0, 0.4)\
-		.set_trans(Tween.TRANS_SINE)\
-		.set_ease(Tween.EASE_OUT)
-		
-func shake(strength := 6.0, duration := 0.15):
-	var original_pos := position
-
-	var tween := create_tween()
-	tween.tween_property(
-		self,
-		"position",
-		original_pos + Vector2(strength, 0),
-		0.04
-	)
-	tween.tween_property(
-		self,
-		"position",
-		original_pos - Vector2(strength, 0),
-		0.04
-	)
-	tween.tween_property(
-		self,
-		"position",
-		original_pos,
-		duration
-	).set_ease(Tween.EASE_OUT)

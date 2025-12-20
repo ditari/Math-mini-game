@@ -1,0 +1,26 @@
+[gd_scene load_steps=7 format=3 uid="uid://bybxe2pjlwavf"]
+
+[ext_resource type="Script" path="res://scripts/audio_controller.gd" id="1_qpjat"]
+[ext_resource type="AudioStream" uid="uid://bnd11px2oi8f" path="res://assets/sounds/335908__littlerainyseasons__correct.wav" id="2_yv612"]
+[ext_resource type="AudioStream" uid="uid://d14pkgrgkjbix" path="res://assets/sounds/edit - 415764__thebuilder15__wrong.wav" id="3_mt7m6"]
+[ext_resource type="AudioStream" uid="uid://ddlidqklo0a40" path="res://assets/sounds/813355__bulkmoerls__1min-clock-ticking-cc0.wav" id="4_hcfi7"]
+[ext_resource type="AudioStream" uid="uid://d2dcbn4cf87sl" path="res://assets/sounds/edit game over - 525254__sonoticai__winlosewonlostgame-over.wav" id="5_f773a"]
+[ext_resource type="AudioStream" uid="uid://xofp5p12m3iq" path="res://assets/sounds/edit - 687108__aphom000__mouse-2-button-long-click.wav" id="6_pcym0"]
+
+[node name="audio_controller" type="Node2D"]
+script = ExtResource("1_qpjat")
+
+[node name="correct" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_yv612")
+
+[node name="wrong" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_mt7m6")
+
+[node name="bgm" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_hcfi7")
+
+[node name="gameover" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_f773a")
+
+[node name="button" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_pcym0")
