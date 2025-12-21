@@ -15,9 +15,9 @@ var box_x
 var box_y = 425 #awal box jatuh
 var gaps
 
-var maxhp := 5
-var hp := 5
-var score := 0
+var maxhp = Global.maxhp
+var hp = Global.hp
+var score = Global.score
 
 var arraynumber := []
 var arrayorder := []
@@ -88,29 +88,18 @@ func glow_screen_soft():
 	flash_tween.tween_property(flash_rect, "modulate:a", 0.0, 0.4)\
 		.set_trans(Tween.TRANS_SINE)\
 		.set_ease(Tween.EASE_OUT)
-		
-func shake(strength := 6.0, duration := 0.15):
-	var original_pos := position
 
+func shake(strength := 7.0, duration := 0.16):
+	var original_pos := position
 	var tween := create_tween()
-	tween.tween_property(
-		self,
-		"position",
-		original_pos + Vector2(strength, 0),
-		0.04
-	)
-	tween.tween_property(
-		self,
-		"position",
-		original_pos - Vector2(strength, 0),
-		0.04
-	)
-	tween.tween_property(
-		self,
-		"position",
-		original_pos,
-		duration
-	).set_ease(Tween.EASE_OUT)
+
+	tween.tween_property(self, "position", original_pos + Vector2(strength, 1), 0.03)
+	tween.tween_property(self, "position", original_pos - Vector2(strength * 0.8, 1), 0.03)
+	tween.tween_property(self, "position", original_pos + Vector2(strength * 0.4, 0), 0.03)
+	tween.tween_property(self, "position", original_pos, duration)\
+		.set_trans(Tween.TRANS_SINE)\
+		.set_ease(Tween.EASE_OUT)
+
 	
 # =========================
 # SIGNALS
@@ -146,12 +135,13 @@ func update_ui():
 	#hplabel.text = "HP: " + str(hp)
 	scorelabel.text = "SCORE: " + str(score)
 
-	#harusnya updatehearts dulu baru gameover
-	if hp <= 0:
-		print("gameover")
-		hp = 5
-		
 	update_hearts()
+	
+	if hp <= 0:
+		Global.score = score
+		get_tree().change_scene_to_file("res://scenes/gameover.tscn")	
+		
+	
 
 func get_wrong_numbers(erasednumber):
 	var numbers = [0,1,2,3,4,5,6,7,8,9,10]

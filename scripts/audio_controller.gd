@@ -17,6 +17,10 @@ func play_wrong():
 func play_bgm():
 	$bgm.play()
 	
+func stop_bgm():
+	if $bgm.playing:
+		$bgm.stop()	
+	
 func play_gameover():
 	$gameover.play()
 	
