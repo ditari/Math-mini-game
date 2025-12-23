@@ -1,6 +1,53 @@
 extends Node
 
+const SAVE_PATH := "user://save.json"
+
 var hp = 5 #currenthp
-var maxhp = 5 
+
+var maxhp  = {
+	"easy": 5,
+	"normal": 4,
+	"hard": 3,
+	"expert" : 3
+}
+
+var difficulty = "easy"
+
 var score = 0 #currentscore
-var highscore = 0
+
+var highscore = {
+	"easy": 0,
+	"normal": 0,
+	"hard": 0,
+	"expert" : 0
+}
+
+func _ready():
+	load_data()
+	
+# ======================
+# SAVE / LOAD
+# ======================
+func save_data():
+	var data := {
+		"highscore": highscore
+	}
+
+	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	file.store_string(JSON.stringify(data))
+	file.close()
+
+
+func load_data():
+	if not FileAccess.file_exists(SAVE_PATH):
+		save_data()
+		return
+
+	var file := FileAccess.open(SAVE_PATH, FileAccess.READ)
+	var text := file.get_as_text()
+	file.close()
+
+	var data = JSON.parse_string(text)
+	if data and data.has("highscore"):
+		highscore = data["highscore"]
+

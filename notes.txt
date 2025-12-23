@@ -1,0 +1,21 @@
+edit : disamakan saja dengan fall6 fall9
+
+ada var nextshift meski ga dipakai
+
+start_round ada nextshift
+
+
+
+
+beda fall3 dengan fall6 fall9 :
+
+
+edit, fungsi generatebox ada var speed min max 
+jadi var speed min max di atas saja yang diubah
+
+fungsi generateboxes jadi ada generateboxes1 2 3
+
+fungsi generatequestion() 
+
+fungsi generateorder()
+

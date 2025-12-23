@@ -15,7 +15,11 @@ var box_x
 var box_y = 425 #awal box jatuh
 var gaps
 
-var maxhp = Global.maxhp
+#kecepatan fall box
+var speedmin = 50
+var speedmax = 100
+
+var maxhp = Global.maxhp[Global.difficulty]
 var hp = Global.hp
 var score = Global.score
 
@@ -30,8 +34,11 @@ var correctanswer := 0
 var correct_out_screen := false
 var clicked_right = null
 
-#var screen_size
-#var gaps
+var reward 
+const reward1 = 50
+const reward2 = 100
+const reward3 = 150
+
 
 
 func _ready():
@@ -40,11 +47,10 @@ func _ready():
 	gaps = (screen_width - 3 * box_width) / (3 + 1) #gaps untuk 3 boxes
 	AudioController.play_bgm()
 	
-	setup_hearts()
+	setup_hearts() #heartbar
 	randomize()
-	start_round()
+	start_round() 
 	
-
 
 func _process(delta):
 	handle_result()
@@ -52,7 +58,7 @@ func _process(delta):
 	update_ui()
 
 # =========================
-# heart bar
+# Heart Bar
 # =========================
 func setup_hearts():
 	for child in heart_bar.get_children():
@@ -70,7 +76,7 @@ func update_hearts():
 		heart.visible = i < hp
 
 # =========================
-# flash screen and shake
+# Flash screen and shake
 # =========================
 
 func _stop_flash():
@@ -119,12 +125,7 @@ func box_pressed(number, box_spawn_id):
 	if number == correctanswer:
 		clicked_right = true
 	else:
-		clicked_right = false
-		
-# =========================
-# other functions
-# =========================		
-	
+		clicked_right = false	
 		
 func deleteparentboxes():
 	for c in $parentboxes.get_children():
@@ -132,23 +133,28 @@ func deleteparentboxes():
 
 
 func update_ui():
-	#hplabel.text = "HP: " + str(hp)
 	scorelabel.text = "SCORE: " + str(score)
-
 	update_hearts()
 	
 	if hp <= 0:
 		Global.score = score
 		get_tree().change_scene_to_file("res://scenes/gameover.tscn")	
 		
+# =========================
+# ROUND CONTROL
+# =========================
+func start_round():
+	spawn_id += 1               # ❗ invalidate old waves
+	is_generating = false
+	deleteparentboxes()
+
+	generatequestion()
+	generateorder()
+
+	nextshift = 1 #sebenarnya ga butuh buat fall3
+	clicked_right = null
+	correct_out_screen = false
 	
-
-func get_wrong_numbers(erasednumber):
-	var numbers = [0,1,2,3,4,5,6,7,8,9,10]
-	numbers.erase(erasednumber)
-	numbers.shuffle()
-	return numbers
-
 func handle_result():
 	if clicked_right == null and not correct_out_screen:
 		return
@@ -156,36 +162,14 @@ func handle_result():
 	if clicked_right == true:
 		glow_screen_soft()
 		AudioController.play_correct()
-		score += 100
+		score += reward
 	else:
 		shake()
 		AudioController.play_wrong()
 		hp -= 1
 
-
-	start_round()
-
-#====================================================dari sini isinya beda
-
-
-# =========================
-# ROUND CONTROL
-# =========================
-func start_round():
-	spawn_id += 1           # invalidate old boxes
-	is_generating = false
-	deleteparentboxes()
-
-	generatequestion()
-	generateorder()
-
-	clicked_right = null
-	correct_out_screen = false
-
-
-
-
-
+	start_round()	
+	
 # =========================
 # GENERATION (ONE WAVE)
 # =========================
@@ -196,7 +180,11 @@ func handle_generation():
 	if $parentboxes.get_child_count() == 0:
 		is_generating = true
 		generate_boxes(spawn_id)
-
+	
+	
+# =========================
+# Async spawning
+# =========================	
 
 func generate_boxes(id):
 	if id != spawn_id:
@@ -217,37 +205,9 @@ func generate_boxes(id):
 	generatebox(arrayorder[2], arraynumber[2])
 
 	is_generating = false
-
-
+	
 # =========================
-# QUESTION / DATA
-# =========================
-
-
-
-func generatequestion():
-	correctanswer = randi_range(0, 10)
-	var a = randi_range(0, correctanswer)
-	var b = correctanswer - a
-	questionlabel.text = str(a) + " + " + str(b) + " = ?"
-
-	var numbers = get_wrong_numbers(correctanswer)
-	arraynumber = [
-		correctanswer,
-		numbers[0],
-		numbers[1]
-	]
-	arraynumber.shuffle()
-
-
-func generateorder():
-	var a = ["left", "center", "right"]
-	a.shuffle()
-	arrayorder = a
-
-
-# =========================
-# BOX
+# Box creation
 # =========================
 func generatebox(type, numberlabel):
 	var box = fallboxscene.instantiate()
@@ -265,7 +225,7 @@ func generatebox(type, numberlabel):
 	box.position = Vector2(box_x, box_y)
 
 	box.set_label(numberlabel)
-	box.set_speed(randi_range(50, 100))
+	box.set_speed(randi_range(speedmin, speedmax))
 	
 	var index = str(numberlabel)[-1]
 	#box.setup(COLORS[index])
@@ -274,5 +234,57 @@ func generatebox(type, numberlabel):
 	box.connect("out_of_screen", box_out_of_screen)
 	box.connect("button_pressed", box_pressed)
 
+# =========================
+# QUESTION / DATA
+# =========================
 
+func get_wrong_numbers(erasednumber):
+	var numbers = [0,1,2,3,4,5,6,7,8,9,10]
+	numbers.erase(erasednumber)
+	numbers.shuffle()
+	return numbers
+	
+func generateorder():
+	var a = ["left", "center", "right"]
+	a.shuffle()
+	arrayorder = a
+
+func generatequestion():
+	var roll := randi() % 100  # 0–99
+
+	if roll < 30:
+		generatequestion1()
+	elif roll < 80:
+		generatequestion2()
+	else:
+		generatequestion3()
+	
+	var numbers = get_wrong_numbers(correctanswer)
+	arraynumber = [
+		correctanswer,
+		numbers[0],
+		numbers[1]
+	]
+	arraynumber.shuffle()
+	
+func generatequestion1():
+	reward = reward1
+	correctanswer = randi_range(0, 10)
+	var a = randi_range(0, correctanswer)
+	var b = correctanswer - a
+	questionlabel.text = str(a) + " + " + str(b) + " = ?"
+	
+func generatequestion2():
+	reward = reward2
+	var a = randi_range(0, 5)
+	var b = randi_range(0, a)
+	correctanswer = a - b
+	questionlabel.text = str(a) + " - " + str(b) + " = ?"
+
+func generatequestion3():
+	reward = reward3
+	var a = randi_range(5, 10)
+	var b = randi_range(0, a)
+	correctanswer = a - b
+	questionlabel.text = str(a) + " - " + str(b) + " = ?"
 
