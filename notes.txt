@@ -9,13 +9,16 @@ start_round ada nextshift
 
 beda fall3 dengan fall6 fall9 :
 
-
 edit, fungsi generatebox ada var speed min max 
 jadi var speed min max di atas saja yang diubah
 
+audiocontroller play bgm cukup sekali di fall3 saja
+
+fungsi handle_generation
+
 fungsi generateboxes jadi ada generateboxes1 2 3
 
-fungsi generatequestion() 
-
 fungsi generateorder()
+
+fungsi generatequestion()
 

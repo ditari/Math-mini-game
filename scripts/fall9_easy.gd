@@ -16,8 +16,8 @@ var box_y = 425 #awal box jatuh
 var gaps
 
 #kecepatan fall box
-var speedmin = 50
-var speedmax = 100
+var speedmin = 150
+var speedmax = 200
 
 var maxhp = Global.maxhp[Global.difficulty]
 var hp = Global.hp
@@ -45,7 +45,7 @@ func _ready():
 	
 	var screen_width := get_viewport_rect().size.x
 	gaps = (screen_width - 3 * box_width) / (3 + 1) #gaps untuk 3 boxes
-	AudioController.play_bgm()
+	#AudioController.play_bgm()
 	
 	setup_hearts() #heartbar
 	randomize()
@@ -171,40 +171,92 @@ func handle_result():
 	start_round()	
 	
 # =========================
-# GENERATION (ONE WAVE)
+# GENERATION (TWO WAVES)
 # =========================
 func handle_generation():
 	if is_generating:
 		return
 
-	if $parentboxes.get_child_count() == 0:
+	if nextshift == 1 and $parentboxes.get_child_count() == 0:
 		is_generating = true
-		generate_boxes(spawn_id)
-	
+		nextshift = 2
+		generateboxes1(spawn_id)
+
+	elif nextshift == 2 and $parentboxes.get_child_count() == 0:
+		is_generating = true
+		nextshift = 3
+		generateboxes2(spawn_id)
+
+	elif nextshift == 3 and $parentboxes.get_child_count() == 0:
+		is_generating = true
+		nextshift = 4
+		generateboxes3(spawn_id)
 	
 # =========================
 # Async spawning
 # =========================	
 
-func generate_boxes(id):
+func generateboxes1(id):
 	if id != spawn_id:
 		return
 
 	generatebox(arrayorder[0], arraynumber[0])
 
-	await get_tree().create_timer(randi_range(1,3)).timeout
+	await get_tree().create_timer(randi_range(1, 3)).timeout
 	if id != spawn_id:
 		return
 
 	generatebox(arrayorder[1], arraynumber[1])
 
-	await get_tree().create_timer(randi_range(1,3)).timeout
+	await get_tree().create_timer(randi_range(1, 3)).timeout
 	if id != spawn_id:
 		return
 
 	generatebox(arrayorder[2], arraynumber[2])
 
 	is_generating = false
+
+
+func generateboxes2(id):
+	if id != spawn_id:
+		return
+
+	generatebox(arrayorder[3], arraynumber[3])
+
+	await get_tree().create_timer(randi_range(1, 3)).timeout
+	if id != spawn_id:
+		return
+
+	generatebox(arrayorder[4], arraynumber[4])
+
+	await get_tree().create_timer(randi_range(1, 3)).timeout
+	if id != spawn_id:
+		return
+
+	generatebox(arrayorder[5], arraynumber[5])
+
+	is_generating = false
+
+func generateboxes3(id):
+	if id != spawn_id:
+		return
+
+	generatebox(arrayorder[6], arraynumber[6])
+
+	await get_tree().create_timer(randi_range(1, 3)).timeout
+	if id != spawn_id:
+		return
+
+	generatebox(arrayorder[7], arraynumber[7])
+
+	await get_tree().create_timer(randi_range(1, 3)).timeout
+	if id != spawn_id:
+		return
+
+	generatebox(arrayorder[8], arraynumber[8])
+
+	is_generating = false
+
 	
 # =========================
 # Box creation
@@ -266,9 +318,13 @@ func generatequestion3():
 	questionlabel.text = str(a) + " - " + str(b) + " = ?"
 	
 func generateorder():
-	var a = ["left", "center", "right"]
-	a.shuffle()
-	arrayorder = a	
+	var a1 = ["left", "center", "right"]
+	var a2 = ["left", "center", "right"]
+	var a3 = ["left", "center", "right"]
+	a1.shuffle()
+	a2.shuffle()
+	a3.shuffle()
+	arrayorder = a1 + a2 + a3
 	
 func generatequestion():
 	var roll := randi() % 100  # 0–99
@@ -279,9 +335,11 @@ func generatequestion():
 		generatequestion2()
 	else:
 		generatequestion3()
-
+		
 	var numbers = get_wrong_numbers(correctanswer)
 	
-	arraynumber = numbers.slice(0,2)
+	arraynumber = numbers.slice(0,8)
 	arraynumber.append(correctanswer)
 	arraynumber.shuffle()
+
+	
