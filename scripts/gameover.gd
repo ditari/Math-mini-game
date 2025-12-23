@@ -36,11 +36,12 @@ func _ready():
 	score_label.text = "Score: "+ str(Global.score)
 
 func _on_button_pressed():
-	Global.difficulty = "easy"
+	#Global.difficulty = "easy"
 	Global.hp = Global.maxhp[Global.difficulty]
 	Global.score = 0
 	
-	get_tree().change_scene_to_file("res://scenes/fall3.tscn")
+	if Global.difficulty == "easy":
+		get_tree().change_scene_to_file("res://scenes/fall3_easy.tscn")
 
 func _on_button_2_pressed():
 	get_tree().change_scene_to_file("res://scenes/levelchoice.tscn")

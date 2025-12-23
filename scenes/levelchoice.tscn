@@ -14,8 +14,8 @@ theme_override_font_sizes/font_size = 50
 text = "easy"
 
 [node name="Button2" type="Button" parent="."]
-offset_left = 276.0
-offset_top = 508.0
+offset_left = 250.0
+offset_top = 491.0
 offset_right = 461.0
 offset_bottom = 597.0
 theme_override_font_sizes/font_size = 50

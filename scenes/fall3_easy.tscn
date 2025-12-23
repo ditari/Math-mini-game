@@ -1,8 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dr4ssxavemh1s"]
+[gd_scene load_steps=7 format=3 uid="uid://d74xwg6n1wng"]
 
-[ext_resource type="Script" path="res://scripts/fall6e.gd" id="1_s8exq"]
-[ext_resource type="Texture2D" uid="uid://c3qnnqatrvwgr" path="res://assets/bg4.png" id="2_cgsbx"]
-[ext_resource type="Script" path="res://scripts/bg.gd" id="3_cgc47"]
+[ext_resource type="Script" path="res://scripts/fall3_easy.gd" id="1_vdvi5"]
+[ext_resource type="Texture2D" uid="uid://c3qnnqatrvwgr" path="res://assets/bg4.png" id="2_fhra0"]
+[ext_resource type="Script" path="res://scripts/bg.gd" id="3_3dye1"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_stqpd"]
 blend_mode = 1
@@ -32,11 +32,11 @@ shadow_color = Color(1, 1, 1, 0)
 bg_color = Color(0.0666667, 0.0941176, 0.152941, 1)
 
 [node name="Node2D" type="Node2D"]
-script = ExtResource("1_s8exq")
+script = ExtResource("1_vdvi5")
 
 [node name="bg" type="Sprite2D" parent="."]
-texture = ExtResource("2_cgsbx")
-script = ExtResource("3_cgc47")
+texture = ExtResource("2_fhra0")
+script = ExtResource("3_3dye1")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
