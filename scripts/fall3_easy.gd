@@ -39,10 +39,14 @@ const reward1 = 50
 const reward2 = 100
 const reward3 = 150
 
+#timer
+var level_time = 0.0
+const LEVEL_DURATION = 30.0 #seconds
+var level_finished = false
 
 
 func _ready():
-	
+	print("fall3")
 	var screen_width := get_viewport_rect().size.x
 	gaps = (screen_width - 3 * box_width) / (3 + 1) #gaps untuk 3 boxes
 	AudioController.play_bgm()
@@ -53,6 +57,9 @@ func _ready():
 	
 
 func _process(delta):
+	if not level_finished:
+		level_time += delta	
+	
 	handle_result()
 	handle_generation()
 	update_ui()
@@ -144,6 +151,12 @@ func update_ui():
 # ROUND CONTROL
 # =========================
 func start_round():
+	# 🚨 stop before generating next question
+	if level_time >= LEVEL_DURATION:
+		level_finished = true
+		end_level()
+		return	
+	
 	spawn_id += 1               # ❗ invalidate old waves
 	is_generating = false
 	deleteparentboxes()
@@ -169,6 +182,17 @@ func handle_result():
 		hp -= 1
 
 	start_round()	
+	
+# =========================
+# Level end before next round started
+# =========================	
+	
+func end_level():
+	spawn_id += 1 # invalidate async spawns
+	Global.score = score
+	Global.hp = hp
+	get_tree().change_scene_to_file("res://scenes/fall6_easy.tscn")
+	
 	
 # =========================
 # GENERATION (ONE WAVE)

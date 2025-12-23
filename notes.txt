@@ -5,7 +5,7 @@ ada var nextshift meski ga dipakai
 start_round ada nextshift
 
 
-
+--------------
 
 beda fall3 dengan fall6 fall9 :
 
@@ -22,3 +22,16 @@ fungsi generateorder()
 
 fungsi generatequestion()
 
+
+----------------
+
+untuk timer : 
+
+variable timer tambahan di bagian atas
+
+kode tambahan di _process
+
+kode tambahan di start_round
+
+fungsi tambahan end_level (aku taruh setelah handle result)
+global.score dan global.hp disimpan dulu sebelum load level fall berikutnya

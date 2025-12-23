@@ -40,9 +40,8 @@ const reward2 = 100
 const reward3 = 150
 
 
-
 func _ready():
-	
+	print ("fall9")
 	var screen_width := get_viewport_rect().size.x
 	gaps = (screen_width - 3 * box_width) / (3 + 1) #gaps untuk 3 boxes
 	#AudioController.play_bgm()
@@ -171,7 +170,7 @@ func handle_result():
 	start_round()	
 	
 # =========================
-# GENERATION (TWO WAVES)
+# GENERATION (THREE WAVES)
 # =========================
 func handle_generation():
 	if is_generating:
