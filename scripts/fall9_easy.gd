@@ -38,6 +38,12 @@ var reward
 const reward1 = 50
 const reward2 = 100
 const reward3 = 150
+const reward4 = 0 #dipakai di hard dan expert
+
+#timer - ga dipakai di fall9 tapi dicopy saja siapa tahu ada fall12
+var level_time = 0.0
+const LEVEL_DURATION = 30.0 #seconds
+var level_finished = false
 
 
 func _ready():
@@ -290,31 +296,10 @@ func generatebox(type, numberlabel):
 # =========================
 
 func get_wrong_numbers(erasednumber):
-	var numbers = [0,1,2,3,4,5,6,7,8,9,10]
+	var numbers := range(11) #make array from 0-10
 	numbers.erase(erasednumber)
 	numbers.shuffle()
 	return numbers
-	
-func generatequestion1():
-	reward = reward1
-	correctanswer = randi_range(0, 10)
-	var a = randi_range(0, correctanswer)
-	var b = correctanswer - a
-	questionlabel.text = str(a) + " + " + str(b) + " = ?"
-	
-func generatequestion2():
-	reward = reward2
-	var a = randi_range(0, 5)
-	var b = randi_range(0, a)
-	correctanswer = a - b
-	questionlabel.text = str(a) + " - " + str(b) + " = ?"
-
-func generatequestion3():
-	reward = reward3
-	var a = randi_range(5, 10)
-	var b = randi_range(0, a)
-	correctanswer = a - b
-	questionlabel.text = str(a) + " - " + str(b) + " = ?"
 	
 func generateorder():
 	var a1 = ["left", "center", "right"]
@@ -341,4 +326,24 @@ func generatequestion():
 	arraynumber.append(correctanswer)
 	arraynumber.shuffle()
 
+func generatequestion1():
+	reward = reward1
+	correctanswer = randi_range(0, 10)
+	var a = randi_range(0, correctanswer)
+	var b = correctanswer - a
+	questionlabel.text = str(a) + " + " + str(b) + " = ?"
+	
+func generatequestion2():
+	reward = reward2
+	var a = randi_range(0, 5)
+	var b = randi_range(0, a)
+	correctanswer = a - b
+	questionlabel.text = str(a) + " - " + str(b) + " = ?"
+
+func generatequestion3():
+	reward = reward3
+	var a = randi_range(5, 10)
+	var b = randi_range(0, a)
+	correctanswer = a - b
+	questionlabel.text = str(a) + " - " + str(b) + " = ?"
 	

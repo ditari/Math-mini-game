@@ -35,3 +35,18 @@ kode tambahan di start_round
 
 fungsi tambahan end_level (aku taruh setelah handle result)
 global.score dan global.hp disimpan dulu sebelum load level fall berikutnya
+
+-------------------
+
+untuk difficulty hard dan expert 
+fungsi get wrong numbers jangan random ?
+mendekati nilai yg benar?
+
+kalau normal cuma sampai 25 gapapalah random
+
+kalau hard sampai 50
+mungkin rentang 15 bawah 15 atas dari jawaban benar 
+
+kalau expert sampai 100
+rentang 25 bawah 25 atas dari jawaban benar
+
