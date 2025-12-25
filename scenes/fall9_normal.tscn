@@ -1,0 +1,108 @@
+[gd_scene load_steps=7 format=3 uid="uid://duj3anwulo06e"]
+
+[ext_resource type="Script" path="res://scripts/fall9_normal.gd" id="1_ji1my"]
+[ext_resource type="Texture2D" uid="uid://c3qnnqatrvwgr" path="res://assets/bg4.png" id="2_hfgt4"]
+[ext_resource type="Script" path="res://scripts/bg.gd" id="3_8ne5q"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_stqpd"]
+blend_mode = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t7oa6"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.0666667, 0.0941176, 0.152941, 1)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_blend = true
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+shadow_color = Color(1, 1, 1, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ve8cu"]
+bg_color = Color(0.0666667, 0.0941176, 0.152941, 1)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_ji1my")
+
+[node name="bg" type="Sprite2D" parent="."]
+texture = ExtResource("2_hfgt4")
+script = ExtResource("3_8ne5q")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control"]
+material = SubResource("CanvasItemMaterial_stqpd")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -102.5
+offset_top = 125.0
+offset_right = 102.5
+offset_bottom = 275.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_t7oa6")
+
+[node name="questionlabel" type="Label" parent="CanvasLayer/Control/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 100
+text = "test"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -107.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 92.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ve8cu")
+
+[node name="scorelabel" type="Label" parent="CanvasLayer/Control/PanelContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "100
+"
+horizontal_alignment = 2
+
+[node name="heartbar" type="HBoxContainer" parent="CanvasLayer"]
+offset_left = 20.0
+offset_top = 32.0
+offset_right = 276.0
+offset_bottom = 80.0
+
+[node name="parentboxes" type="Node2D" parent="."]

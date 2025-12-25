@@ -47,7 +47,7 @@ var level_finished = false
 
 
 func _ready():
-	print("fall6")
+	print("fall6easy")
 	var screen_width := get_viewport_rect().size.x
 	gaps = (screen_width - 3 * box_width) / (3 + 1) #gaps untuk 3 boxes
 	#AudioController.play_bgm()
@@ -291,11 +291,20 @@ func generatebox(type, numberlabel):
 # QUESTION / DATA
 # =========================
 
-func get_wrong_numbers(erasednumber):
-	var numbers := range(11) #make array from 0-10
-	numbers.erase(erasednumber)
+func generate_arraynumber(correctanswer) :
+	var numbers := range(11)   # 0–10
+	numbers.erase(correctanswer)
 	numbers.shuffle()
-	return numbers
+
+	var result := []
+
+	for i in range(5):
+		result.append(numbers[i])
+
+	result.append(correctanswer)
+	result.shuffle()
+
+	return result
 	
 func generateorder():
 	var a1 = ["left", "center", "right"]
@@ -314,11 +323,7 @@ func generatequestion():
 	else:
 		generatequestion3()
 		
-	var numbers = get_wrong_numbers(correctanswer)
-	
-	arraynumber = numbers.slice(0,5)
-	arraynumber.append(correctanswer)
-	arraynumber.shuffle()
+	arraynumber = generate_arraynumber(correctanswer)
 	
 func generatequestion1():
 	reward = reward1

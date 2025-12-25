@@ -47,7 +47,7 @@ var level_finished = false
 
 
 func _ready():
-	print ("fall9easy")
+	print ("fall9normal")
 	var screen_width := get_viewport_rect().size.x
 	gaps = (screen_width - 3 * box_width) / (3 + 1) #gaps untuk 3 boxes
 	#AudioController.play_bgm()
@@ -296,7 +296,7 @@ func generatebox(type, numberlabel):
 # =========================
 
 func generate_arraynumber(correctanswer) :
-	var numbers := range(11)   # 0–10
+	var numbers := range(26)   # 0–25
 	numbers.erase(correctanswer)
 	numbers.shuffle()
 
@@ -322,34 +322,138 @@ func generateorder():
 func generatequestion():
 	var roll := randi() % 100  # 0–99
 
-	if roll < 30:
+	if roll < 20:
 		generatequestion1()
-	elif roll < 80:
+	elif roll < 40:
 		generatequestion2()
-	else:
+	elif roll < 60:
 		generatequestion3()
-	
+	elif roll < 80:
+		generatequestion4()
+	else:
+		generatequestion5()
+
 	arraynumber = generate_arraynumber(correctanswer)
-
-
-func generatequestion1():
-	reward = reward1
-	correctanswer = randi_range(0, 10)
-	var a = randi_range(0, correctanswer)
-	var b = correctanswer - a
-	questionlabel.text = str(a) + " + " + str(b) + " = ?"
 	
-func generatequestion2():
+func add_no_carry(max_val):
 	reward = reward2
-	var a = randi_range(0, 5)
+	for i in 100:
+		var a = randi_range(0, max_val)
+		var b = randi_range(0, max_val)
+
+		if (a % 10) + (b % 10) >= 10:
+			continue
+
+		if a + b > max_val:
+			continue
+
+		correctanswer = a + b
+		questionlabel.text = str(a) + " + " + str(b) + " = ?"
+		return
+
+	# fallback
+	add_single_digit()
+	
+
+func add_with_carry(max_val):
+	reward = reward3
+	for i in 100:
+		var a = randi_range(10, max_val)
+		var b = randi_range(10, max_val)
+
+		if (a % 10) + (b % 10) < 10:
+			continue
+
+		if a + b > max_val:
+			continue
+
+		correctanswer = a + b
+		questionlabel.text = str(a) + " + " + str(b) + " = ?"
+		return
+
+	# fallback
+	add_single_digit()
+		
+
+func sub_no_borrow(max_val):
+	reward = reward2
+	for i in 100:
+		var a = randi_range(0, max_val)
+		var b = randi_range(0, a)
+
+		if (a % 10) < (b % 10):
+			continue
+
+		correctanswer = a - b
+		questionlabel.text = str(a) + " - " + str(b) + " = ?"
+		return
+
+	# fallback
+	sub_single_digit()
+
+
+func sub_with_borrow(max_val):
+	reward = reward3
+	for i in 100:
+		var a = randi_range(10, max_val)
+		var b = randi_range(1, a)
+
+		if (a % 10) >= (b % 10):
+			continue
+
+		correctanswer = a - b
+		questionlabel.text = str(a) + " - " + str(b) + " = ?"
+		return
+
+	# fallback
+	sub_single_digit()
+
+func add_single_digit():
+	reward = reward1
+	var a = randi_range(0, 10)
+	var b = randi_range(0, 10)
+	correctanswer = a + b
+	questionlabel.text = str(a) + " + " + str(b) + " = ?"
+
+func sub_single_digit():
+	reward = reward1
+	var a = randi_range(0, 20)
 	var b = randi_range(0, a)
 	correctanswer = a - b
 	questionlabel.text = str(a) + " - " + str(b) + " = ?"
 
-func generatequestion3():
+
+func generatequestion1(): #add sub 0-10
+	if (randi() & 1) == 0:
+		add_single_digit() 
+	else:
+		sub_single_digit()
+		
+func generatequestion2(): #add sub 10-25 no carry
+	if (randi() & 1) == 0:
+		add_no_carry(25)		
+	else:
+		sub_no_borrow(25)
+
+func generatequestion3(): #multiply 1-5 x 1-5
+	reward = reward2
+	var a = randi_range(0,5)
+	var b = randi_range(0, 5)
+	correctanswer = a * b
+	questionlabel.text = str(a) + " x " + str(b) + " = ?"
+	
+func generatequestion4(): #add sub 10-25 with carry
+	if (randi() & 1) == 0:
+		add_with_carry(25)		
+	else:
+		sub_with_borrow(25)
+		
+func generatequestion5(): #multiply 6-10 x b <= 25
 	reward = reward3
-	var a = randi_range(5, 10)
-	var b = randi_range(0, a)
-	correctanswer = a - b
-	questionlabel.text = str(a) + " - " + str(b) + " = ?"
+	var a = randi_range(6,10)
+	var b = randi_range(1, int(25 / a))
+	correctanswer = a * b
+	questionlabel.text = str(a) + " x " + str(b) + " = ?"
+	
+
 	

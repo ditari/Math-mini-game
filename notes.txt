@@ -43,6 +43,7 @@ fungsi get wrong numbers jangan random ?
 mendekati nilai yg benar?
 
 kalau normal cuma sampai 25 gapapalah random
+edit random juga kejauhan
 
 kalau hard sampai 50
 mungkin rentang 15 bawah 15 atas dari jawaban benar 
@@ -50,3 +51,32 @@ mungkin rentang 15 bawah 15 atas dari jawaban benar
 kalau expert sampai 100
 rentang 25 bawah 25 atas dari jawaban benar
 
+---fungsi get_wrong_numbers diubah untuk setiap fall3 fall6 fall9
+rentang wrong answer 
+fall3 ada 2 wrong answer - pilih dari array 6 angka
+fall6 5 wrong answer out of 15
+fall9 8 wrong answer out of 24
+
+--------------------
+urutan copy untuk difficulty level
+
+copy fall3/fall6/fall9 dulu ke beda level (easy normal hard expert)
+
+ubah hanya bagian question/data
+buat saja question/data di fall3 
+copy ke fall6 fall9
+
+cek/ubah generateorder kalau ke overwrite untuk fall6 dan fall9
+
+ubah fungsi generate_arraynumber untuk fall6 dan fall9
+
+ganti fungsi end_level
+
+-------------------------------------
+
+edit 25 des
+
+ketemu bug di slice untuk int packed array 
+jangan pakai slice
+
+pakai fungsi generate_arraynumber
