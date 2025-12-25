@@ -313,8 +313,9 @@ func generatequestion():
 func add_no_carry(max_val):
 	reward = reward2
 	for i in 100:
-		var a = randi_range(0, max_val)
-		var b = randi_range(0, max_val)
+		#2 digit
+		var a = randi_range(10, max_val)
+		var b = randi_range(10, max_val)
 
 		if (a % 10) + (b % 10) >= 10:
 			continue
@@ -353,8 +354,8 @@ func add_with_carry(max_val):
 func sub_no_borrow(max_val):
 	reward = reward2
 	for i in 100:
-		var a = randi_range(0, max_val)
-		var b = randi_range(0, a)
+		var a = randi_range(10, max_val)
+		var b = randi_range(10, a)
 
 		if (a % 10) < (b % 10):
 			continue
@@ -385,20 +386,19 @@ func sub_with_borrow(max_val):
 
 func add_single_digit():
 	reward = reward1
-	var a = randi_range(0, 10)
-	var b = randi_range(0, 10)
+	var a = randi_range(0, 9)
+	var b = randi_range(0, 9)
 	correctanswer = a + b
 	questionlabel.text = str(a) + " + " + str(b) + " = ?"
 
 func sub_single_digit():
 	reward = reward1
-	var a = randi_range(0, 20)
+	var a = randi_range(0, 9)
 	var b = randi_range(0, a)
 	correctanswer = a - b
 	questionlabel.text = str(a) + " - " + str(b) + " = ?"
 
-
-func generatequestion1(): #add sub 0-10
+func generatequestion1(): #add sub 0-9
 	if (randi() & 1) == 0:
 		add_single_digit() 
 	else:
