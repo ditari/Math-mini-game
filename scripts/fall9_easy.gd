@@ -166,11 +166,13 @@ func handle_result():
 
 	if clicked_right == true:
 		glow_screen_soft()
-		AudioController.play_correct()
+		if Global.audio_settings["sounds"]:
+			AudioController.play_correct()
 		score += reward
 	else:
 		shake()
-		AudioController.play_wrong()
+		if Global.audio_settings["sounds"]:
+			AudioController.play_wrong()
 		hp -= 1
 
 	start_round()	

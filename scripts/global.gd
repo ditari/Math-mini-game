@@ -22,6 +22,11 @@ var highscore = {
 	"expert" : 0
 }
 
+var audio_settings = {
+	"bgm": true,    
+	"sounds": false
+}
+
 func _ready():
 	load_data()
 	
@@ -29,8 +34,10 @@ func _ready():
 # SAVE / LOAD
 # ======================
 func save_data():
+	
 	var data := {
-		"highscore": highscore
+		"highscore": highscore,
+		"audio_settings": audio_settings
 	}
 
 	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
@@ -48,6 +55,14 @@ func load_data():
 	file.close()
 
 	var data = JSON.parse_string(text)
-	if data and data.has("highscore"):
+
+	if data == null:
+		return
+
+	if data.has("highscore"):
 		highscore = data["highscore"]
+
+	if data.has("audio_settings"):
+		for key in data["audio_settings"]:
+			audio_settings[key] = data["audio_settings"][key]
 

@@ -42,7 +42,7 @@ const reward4 = 0 #dipakai di hard dan expert
 
 #timer
 var level_time = 0.0
-const LEVEL_DURATION = 30.0 #seconds
+const LEVEL_DURATION = 15.0 #seconds
 var level_finished = false
 
 
@@ -50,7 +50,9 @@ func _ready():
 	print("fall3easy")
 	var screen_width := get_viewport_rect().size.x
 	gaps = (screen_width - 3 * box_width) / (3 + 1) #gaps untuk 3 boxes
-	AudioController.play_bgm()
+	
+	if Global.audio_settings["bgm"]:
+		AudioController.play_bgm()
 	
 	setup_hearts() #heartbar
 	randomize()
@@ -175,11 +177,13 @@ func handle_result():
 
 	if clicked_right == true:
 		glow_screen_soft()
-		AudioController.play_correct()
+		if Global.audio_settings["sounds"]:
+			AudioController.play_correct()
 		score += reward
 	else:
 		shake()
-		AudioController.play_wrong()
+		if Global.audio_settings["sounds"]:
+			AudioController.play_wrong()
 		hp -= 1
 
 	start_round()	
