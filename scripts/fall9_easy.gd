@@ -10,7 +10,7 @@ var flash_tween: Tween
 var heartscene: PackedScene = preload("res://scenes/heart.tscn")
 
 var fallboxscene: PackedScene = preload("res://scenes/box.tscn")
-const box_width := 206 #untuk scale 0.7
+const box_width := 200 
 var box_x 
 var box_y = 425 #awal box jatuh
 var gaps

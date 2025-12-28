@@ -10,6 +10,7 @@ var speed = 10
 var spawn_id := 0   # 🔑 ADD THIS
 
 
+
 func set_label(t):
 	label.text = str(t)
 	number = t

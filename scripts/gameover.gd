@@ -38,6 +38,7 @@ func _ready():
 	score_label.text = "Score: "+ str(Global.score)
 
 func _on_button_pressed():
+	print("1")
 	Global.hp = Global.maxhp[Global.difficulty]
 	Global.score = 0
 	
@@ -47,12 +48,13 @@ func _on_button_pressed():
 	await get_tree().create_timer(0.3).timeout
 	
 	var scene_path = "res://scenes/fall3_%s.tscn" % Global.difficulty
-	get_tree().change_scene_to_file(scene_path)	
+	#get_tree().change_scene_to_file(scene_path)	
 
 func _on_button_2_pressed():
+	print("2")
 	if Global.audio_settings["sounds"]:
 		AudioController.play_button()
 
 	await get_tree().create_timer(0.3).timeout
-	get_tree().change_scene_to_file("res://scenes/levelchoice.tscn")
+	#get_tree().change_scene_to_file("res://scenes/levelchoice.tscn")
 

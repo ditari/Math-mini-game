@@ -24,7 +24,7 @@ var highscore = {
 
 var audio_settings = {
 	"bgm": true,    
-	"sounds": false
+	"sounds": true
 }
 
 func _ready():

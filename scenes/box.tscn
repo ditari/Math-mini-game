@@ -1,16 +1,16 @@
 [gd_scene load_steps=18 format=3 uid="uid://qmsjy4ip2pds"]
 
 [ext_resource type="Script" path="res://scripts/box.gd" id="1_1ciay"]
-[ext_resource type="Texture2D" uid="uid://ujfwvnl8s27r" path="res://assets/0.png" id="2_qw4cw"]
-[ext_resource type="Texture2D" uid="uid://d1gsyqw80mjfh" path="res://assets/1.png" id="3_x8bea"]
-[ext_resource type="Texture2D" uid="uid://dyt1t5osonv3g" path="res://assets/2.png" id="4_odw6i"]
-[ext_resource type="Texture2D" uid="uid://dlaiarebgtdyo" path="res://assets/3.png" id="5_u0xss"]
-[ext_resource type="Texture2D" uid="uid://cynlcgvrqjb8w" path="res://assets/4.png" id="6_5fcbr"]
-[ext_resource type="Texture2D" uid="uid://bol47mnjeeseh" path="res://assets/5.png" id="7_ht6ke"]
-[ext_resource type="Texture2D" uid="uid://b2h8u0guw7w7m" path="res://assets/6.png" id="8_k83l2"]
-[ext_resource type="Texture2D" uid="uid://b618ucx6yrkd5" path="res://assets/7.png" id="9_op7yt"]
-[ext_resource type="Texture2D" uid="uid://cb30humotxhdk" path="res://assets/8.png" id="10_18ger"]
-[ext_resource type="Texture2D" uid="uid://dupsuxngby2cc" path="res://assets/9.png" id="11_bufdc"]
+[ext_resource type="Texture2D" uid="uid://bvpi5gt3dpr0l" path="res://assets/star0.png" id="2_aibec"]
+[ext_resource type="Texture2D" uid="uid://dyx7f1xm34trh" path="res://assets/star1.png" id="3_4cdnq"]
+[ext_resource type="Texture2D" uid="uid://bnid4c1mbopcg" path="res://assets/star2.png" id="4_ato3d"]
+[ext_resource type="Texture2D" uid="uid://ndut5qnplfe0" path="res://assets/star3.png" id="5_h0u3b"]
+[ext_resource type="Texture2D" uid="uid://iarhrun4nu6k" path="res://assets/star4.png" id="6_doyof"]
+[ext_resource type="Texture2D" uid="uid://dmdtdcx8efwqu" path="res://assets/star5.png" id="7_qd8mi"]
+[ext_resource type="Texture2D" uid="uid://xpihxpjaduoo" path="res://assets/star6.png" id="8_4nvpr"]
+[ext_resource type="Texture2D" uid="uid://de6jkcsvcwigd" path="res://assets/star8.png" id="9_7je07"]
+[ext_resource type="Texture2D" uid="uid://ci0eqkn82j0py" path="res://assets/star7.png" id="9_xvs50"]
+[ext_resource type="Texture2D" uid="uid://bbcp2u30x1a6o" path="res://assets/star9.png" id="11_1uo43"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x8tmq"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -31,7 +31,7 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_qw4cw")
+"texture": ExtResource("2_aibec")
 }],
 "loop": false,
 "name": &"0",
@@ -39,7 +39,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_x8bea")
+"texture": ExtResource("3_4cdnq")
 }],
 "loop": false,
 "name": &"1",
@@ -47,7 +47,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_odw6i")
+"texture": ExtResource("4_ato3d")
 }],
 "loop": false,
 "name": &"2",
@@ -55,7 +55,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_u0xss")
+"texture": ExtResource("5_h0u3b")
 }],
 "loop": false,
 "name": &"3",
@@ -63,7 +63,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_5fcbr")
+"texture": ExtResource("6_doyof")
 }],
 "loop": false,
 "name": &"4",
@@ -71,7 +71,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("7_ht6ke")
+"texture": ExtResource("7_qd8mi")
 }],
 "loop": false,
 "name": &"5",
@@ -79,7 +79,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("8_k83l2")
+"texture": ExtResource("8_4nvpr")
 }],
 "loop": false,
 "name": &"6",
@@ -87,7 +87,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("9_op7yt")
+"texture": ExtResource("9_xvs50")
 }],
 "loop": false,
 "name": &"7",
@@ -95,7 +95,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("10_18ger")
+"texture": ExtResource("9_7je07")
 }],
 "loop": false,
 "name": &"8",
@@ -103,7 +103,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("11_bufdc")
+"texture": ExtResource("11_1uo43")
 }],
 "loop": false,
 "name": &"9",
@@ -111,7 +111,6 @@ animations = [{
 }]
 
 [node name="Node2D" type="Node2D"]
-scale = Vector2(0.7, 0.7)
 script = ExtResource("1_1ciay")
 
 [node name="Button" type="Button" parent="."]
@@ -127,21 +126,21 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_icukp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_4rtvn")
-animation = &"7"
+animation = &"9"
 
 [node name="label" type="Label" parent="AnimatedSprite2D"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -103.0
-offset_top = -102.5
+offset_top = -81.0
 offset_right = -103.0
-offset_bottom = -102.5
+offset_bottom = -102.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 100
-text = "10"
+theme_override_font_sizes/font_size = 75
+text = "100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
