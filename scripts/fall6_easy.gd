@@ -5,14 +5,14 @@ var flash_tween: Tween
 
 @onready var questionlabel =$CanvasLayer/Control/PanelContainer/questionlabel
 @onready var scorelabel = $CanvasLayer/Control/PanelContainer2/scorelabel
-
+@onready var clicklabel = $CanvasLayer/Control/PanelContainer3/clicklabel
 @onready var heart_bar := $CanvasLayer/heartbar
 var heartscene: PackedScene = preload("res://scenes/heart.tscn")
 
 var fallboxscene: PackedScene = preload("res://scenes/box.tscn")
 const box_width := 200 
 var box_x 
-var box_y = 425 #awal box jatuh
+var box_y = 480 #awal box jatuh
 var gaps
 
 #kecepatan fall box
@@ -42,9 +42,10 @@ const reward4 = 0 #dipakai di hard dan expert
 
 #timer
 var level_time = 0.0
-const LEVEL_DURATION = 15.0 #seconds
+const LEVEL_DURATION = 20.0 #seconds
 var level_finished = false
 
+var round_resolved = false
 
 func _ready():
 	print("fall6easy")
@@ -56,10 +57,11 @@ func _ready():
 	randomize()
 	start_round() 
 	
-
 func _process(delta):
-	if not level_finished:
-		level_time += delta		
+	if level_finished:
+		return
+
+	level_time += delta	
 	
 	handle_result()
 	handle_generation()
@@ -132,6 +134,12 @@ func box_pressed(number, box_spawn_id):
 
 	if number == correctanswer:
 		clicked_right = true
+		
+		clicklabel.text = "+"+ str(reward)
+		clicklabel.visible = true
+		await get_tree().create_timer(0.2).timeout
+		clicklabel.visible = false
+		
 	else:
 		clicked_right = false	
 		
@@ -154,7 +162,7 @@ func update_ui():
 func start_round():
 	# 🚨 stop before generating next question
 	if level_time >= LEVEL_DURATION:
-		level_finished = true
+		#level_finished = true
 		end_level()
 		return	
 	
@@ -168,10 +176,16 @@ func start_round():
 	nextshift = 1 #sebenarnya ga butuh buat fall3
 	clicked_right = null
 	correct_out_screen = false
+	round_resolved = false 
 	
 func handle_result():
+	if level_finished or round_resolved:
+		return	
+	
 	if clicked_right == null and not correct_out_screen:
 		return
+		
+	round_resolved = true   # 🔒 LOCK
 
 	if clicked_right == true:
 		glow_screen_soft()
@@ -191,16 +205,25 @@ func handle_result():
 # =========================	
 	
 func end_level():
+	if level_finished:
+		return
+
+	level_finished = true
+	
 	spawn_id += 1 # invalidate async spawns
 	Global.score = score
 	Global.hp = hp
-	get_tree().change_scene_to_file("res://scenes/fall9_easy.tscn")
+	await get_tree().create_timer(0.3).timeout
+	if is_inside_tree():
+		get_tree().change_scene_to_file("res://scenes/fall9_easy.tscn")
 	
-
 # =========================
 # GENERATION (TWO WAVES)
 # =========================
 func handle_generation():
+	if level_finished:
+		return		
+	
 	if is_generating:
 		return
 

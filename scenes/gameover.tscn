@@ -185,11 +185,13 @@ offset_top = 800.0
 offset_right = 262.0
 offset_bottom = 904.0
 grow_horizontal = 2
-theme_override_constants/separation = 50
+theme_override_constants/separation = 70
 
 [node name="Button" type="Button" parent="CanvasLayer/Control/HBoxContainer"]
-custom_minimum_size = Vector2(270, 140)
+custom_minimum_size = Vector2(280, 140)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
@@ -205,8 +207,10 @@ text = "REPLAY
 script = ExtResource("4_gls5v")
 
 [node name="Button2" type="Button" parent="CanvasLayer/Control/HBoxContainer"]
-custom_minimum_size = Vector2(270, 140)
+custom_minimum_size = Vector2(280, 140)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_colors/font_hover_color = Color(0, 0, 0, 1)

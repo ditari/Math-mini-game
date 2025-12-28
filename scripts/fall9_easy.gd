@@ -5,14 +5,14 @@ var flash_tween: Tween
 
 @onready var questionlabel =$CanvasLayer/Control/PanelContainer/questionlabel
 @onready var scorelabel = $CanvasLayer/Control/PanelContainer2/scorelabel
-
+@onready var clicklabel = $CanvasLayer/Control/PanelContainer3/clicklabel
 @onready var heart_bar := $CanvasLayer/heartbar
 var heartscene: PackedScene = preload("res://scenes/heart.tscn")
 
 var fallboxscene: PackedScene = preload("res://scenes/box.tscn")
 const box_width := 200 
 var box_x 
-var box_y = 425 #awal box jatuh
+var box_y = 480 #awal box jatuh
 var gaps
 
 #kecepatan fall box
@@ -40,11 +40,12 @@ const reward2 = 100
 const reward3 = 150
 const reward4 = 0 #dipakai di hard dan expert
 
-#timer - ga dipakai di fall9 tapi dicopy saja siapa tahu ada fall12
-var level_time = 0.0
-const LEVEL_DURATION = 30.0 #seconds
-var level_finished = false
+##timer - ga dipakai di fall9 tapi dicopy saja siapa tahu ada fall12
+#var level_time = 0.0
+#const LEVEL_DURATION = 30.0 #seconds
+#var level_finished = false
 
+var round_resolved = false
 
 func _ready():
 	print ("fall9easy")
@@ -129,6 +130,12 @@ func box_pressed(number, box_spawn_id):
 
 	if number == correctanswer:
 		clicked_right = true
+		
+		clicklabel.text = "+"+ str(reward)
+		clicklabel.visible = true
+		await get_tree().create_timer(0.2).timeout
+		clicklabel.visible = false
+		
 	else:
 		clicked_right = false	
 		
@@ -149,20 +156,26 @@ func update_ui():
 # ROUND CONTROL
 # =========================
 func start_round():
-	spawn_id += 1               # ❗ invalidate old waves
+	spawn_id += 1
 	is_generating = false
 	deleteparentboxes()
 
 	generatequestion()
 	generateorder()
 
-	nextshift = 1 #sebenarnya ga butuh buat fall3
+	nextshift = 1
 	clicked_right = null
 	correct_out_screen = false
+	round_resolved = false   # 🔑 reset lock
 	
 func handle_result():
+	if round_resolved:
+		return	
+	
 	if clicked_right == null and not correct_out_screen:
 		return
+
+	round_resolved = true   # 🔒 LOCK immediately
 
 	if clicked_right == true:
 		glow_screen_soft()

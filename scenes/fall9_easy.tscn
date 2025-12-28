@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dkf4gyk2ef6b2"]
+[gd_scene load_steps=8 format=3 uid="uid://dkf4gyk2ef6b2"]
 
 [ext_resource type="Script" path="res://scripts/fall9_easy.gd" id="1_4orti"]
 [ext_resource type="Texture2D" uid="uid://c3qnnqatrvwgr" path="res://assets/bg4.png" id="2_mqnf4"]
@@ -30,6 +30,9 @@ shadow_color = Color(1, 1, 1, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ve8cu"]
 bg_color = Color(0.0666667, 0.0941176, 0.152941, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bwk3k"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_4orti")
@@ -66,9 +69,9 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -102.5
-offset_top = 125.0
+offset_top = 170.0
 offset_right = 102.5
-offset_bottom = 275.0
+offset_bottom = 320.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_t7oa6")
 
@@ -98,6 +101,24 @@ theme_override_font_sizes/font_size = 50
 text = "100
 "
 horizontal_alignment = 2
+
+[node name="PanelContainer3" type="PanelContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -107.0
+offset_top = 90.0
+offset_right = -22.0
+offset_bottom = 148.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bwk3k")
+
+[node name="clicklabel" type="Label" parent="CanvasLayer/Control/PanelContainer3"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "click"
 
 [node name="heartbar" type="HBoxContainer" parent="CanvasLayer"]
 offset_left = 20.0

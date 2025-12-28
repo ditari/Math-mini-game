@@ -80,3 +80,45 @@ ketemu bug di slice untuk int packed array
 jangan pakai slice
 
 pakai fungsi generate_arraynumber
+
+------------------------
+
+F77D94 - E45770 - E02A4E red
+779EF1 - 5378DE - 2A54D7 dark blue
+A8FF6A - 83FA4D - 6ED93F light green
+FEEA69 - FADD4C - FBD61B yellow
+C7A0D5 - AF7EC2 - 9C5EB6 purple
+FFA45D - FA8740 - FB6D18 orange
+3BB486 - 299B6B - 13834D dark green
+FFA2D4 - FA85BF - FB6DB3 pink
+CAC4C1 - BCB6B3 - ABA5A1 grey
+8FDBFF - 71CBF7 - 41BDF6 light blue
+
+bintang 3x3 cm weight line 4 1/2 putih
+gradient linear down
+
+button yellow long 2 x 6 cm
+
+------
+
+yg diubah di scene
+panelcontainer/questionlabel
+panelcontainer3/clicklabel
+
+di script : 
+var clicklabel
+var box_y (mulai jatuh)
+
+fungsi box_pressed
+
+
+fungsi :
+end_level - sama utk semua fall
+process  - sama utk semua fall
+start_round - hapus level finished
+handle_generation - tambahkan return di awal
+handle_result - tambahkan return di awal
+
+----
+di fall9 ga ada end_level
+tapi handle_result harus diubah
