@@ -1,4 +1,8 @@
 # Godot 4+ specific ignores
 .godot/
 assets/sounds
+assets/trash
+scripts/trash
+scenes/trash
+
 Math-mini-game.apk
