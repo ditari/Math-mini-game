@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cd3il87p83pov"]
+[gd_scene load_steps=20 format=3 uid="uid://cd3il87p83pov"]
 
 [ext_resource type="Script" path="res://scripts/levelchoice.gd" id="1_rc47a"]
 [ext_resource type="Texture2D" uid="uid://bkgb5idunxe2y" path="res://assets/bg8.png" id="2_3uwon"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://dfyfrsxdejt0b" path="res://assets/button_long_a.png" id="4_omq1h"]
 [ext_resource type="Texture2D" uid="uid://bts087v54vh3e" path="res://assets/button_long_b.png" id="5_l4j3l"]
 [ext_resource type="Script" path="res://scripts/Button.gd" id="6_e85ti"]
+[ext_resource type="Texture2D" uid="uid://cnun4numxkbug" path="res://assets/back.png" id="7_jn425"]
+[ext_resource type="Texture2D" uid="uid://lf2opw508r2v" path="res://assets/back_pressed.png" id="8_18km7"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_srtmw"]
 texture = ExtResource("4_omq1h")
@@ -32,6 +34,24 @@ texture_margin_bottom = 24.0
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7n0a0"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wqlax"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kbqld"]
+texture = ExtResource("7_jn425")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1ibj4"]
+texture = ExtResource("7_jn425")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e4yjc"]
+texture = ExtResource("8_18km7")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_umlmi"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s4373"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="Node2D" type="Node2D"]
@@ -129,6 +149,24 @@ theme_override_styles/disabled = SubResource("StyleBoxFlat_1nj8e")
 theme_override_styles/focus = SubResource("StyleBoxFlat_7n0a0")
 text = "EXPERT"
 
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 70.0
+offset_right = 140.0
+offset_bottom = 140.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_wqlax")
+
+[node name="Button5" type="Button" parent="CanvasLayer/Control/PanelContainer"]
+custom_minimum_size = Vector2(100, 70)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_kbqld")
+theme_override_styles/hover = SubResource("StyleBoxTexture_1ibj4")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_e4yjc")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_umlmi")
+theme_override_styles/focus = SubResource("StyleBoxFlat_s4373")
+
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/Button2" to="." method="_on_button_2_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/Button3" to="." method="_on_button_3_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/PanelContainer/Button5" to="." method="_on_button_5_pressed"]

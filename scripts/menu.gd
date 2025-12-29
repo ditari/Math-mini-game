@@ -1,8 +1,5 @@
 extends Node2D
 
-
-
-
 func _on_button_pressed():
 	if Global.audio_settings["sounds"]:
 		AudioController.play_button()	

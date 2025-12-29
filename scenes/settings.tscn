@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://nnd43wowpthu"]
+[gd_scene load_steps=29 format=3 uid="uid://nnd43wowpthu"]
 
 [ext_resource type="Script" path="res://scripts/settings.gd" id="1_gng2f"]
 [ext_resource type="Texture2D" uid="uid://bkgb5idunxe2y" path="res://assets/bg8.png" id="2_4wnwk"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://dfyfrsxdejt0b" path="res://assets/button_long_a.png" id="6_byjei"]
 [ext_resource type="Texture2D" uid="uid://bts087v54vh3e" path="res://assets/button_long_b.png" id="7_11b62"]
 [ext_resource type="Script" path="res://scripts/Button.gd" id="8_uexlk"]
+[ext_resource type="Texture2D" uid="uid://cnun4numxkbug" path="res://assets/back.png" id="9_cjg54"]
+[ext_resource type="Texture2D" uid="uid://lf2opw508r2v" path="res://assets/back_pressed.png" id="10_4xydl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t7hko"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -57,6 +59,24 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0bm7r"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gvvjv"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gpmx7"]
+texture = ExtResource("9_cjg54")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nudvw"]
+texture = ExtResource("9_cjg54")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pvqjp"]
+texture = ExtResource("10_4xydl")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f5g51"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1h8fe"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_gng2f")
 
@@ -79,17 +99,17 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -114.0
+offset_left = -161.0
 offset_top = 50.0
-offset_right = 114.0
-offset_bottom = 122.0
+offset_right = 161.0
+offset_bottom = 149.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_t7hko")
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/PanelContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 70
 text = "SETTINGS"
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
@@ -178,22 +198,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 70
 
-[node name="Button" type="Button" parent="CanvasLayer/Control/HBoxContainer"]
-custom_minimum_size = Vector2(280, 140)
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 60
-theme_override_styles/normal = SubResource("StyleBoxTexture_fvj7i")
-theme_override_styles/hover = SubResource("StyleBoxTexture_3fv25")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_63kqd")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_fnnrv")
-theme_override_styles/focus = SubResource("StyleBoxFlat_0bm7r")
-text = "BACK"
-script = ExtResource("8_uexlk")
-
 [node name="Button2" type="Button" parent="CanvasLayer/Control/HBoxContainer"]
 custom_minimum_size = Vector2(280, 140)
 layout_mode = 2
@@ -210,7 +214,24 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_0bm7r")
 text = "SAVE"
 script = ExtResource("8_uexlk")
 
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 70.0
+offset_right = 140.0
+offset_bottom = 140.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_gvvjv")
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/PanelContainer2"]
+custom_minimum_size = Vector2(100, 70)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_gpmx7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_nudvw")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_pvqjp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_f5g51")
+theme_override_styles/focus = SubResource("StyleBoxFlat_1h8fe")
+
 [connection signal="toggled" from="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/CheckButton" to="." method="_on_check_button_toggled"]
 [connection signal="toggled" from="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer2/CheckButton2" to="." method="_on_check_button_2_toggled"]
-[connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/PanelContainer2/Button" to="." method="_on_button_pressed"]
