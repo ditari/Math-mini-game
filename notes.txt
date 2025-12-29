@@ -138,3 +138,12 @@ bg
 -----
 
 font soda shake by khurasan
+
+-----
+
+kalau gameover itu bgm atau sounds
+sounds kata chatgpt
+
+kalau setting no sounds, pas click save button nya ada sound ga?
+sebaliknya juga
+edit fixed

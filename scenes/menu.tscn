@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://porb5v6ntrs7"]
 
 [ext_resource type="Script" path="res://scripts/menu.gd" id="1_njlid"]
-[ext_resource type="Texture2D" uid="uid://cnes0j64tbpp5" path="res://assets/bg5.png" id="2_h2otn"]
+[ext_resource type="Texture2D" uid="uid://bkgb5idunxe2y" path="res://assets/bg8.png" id="2_04t03"]
 [ext_resource type="Script" path="res://scripts/bg.gd" id="3_4n2p2"]
 [ext_resource type="Texture2D" uid="uid://dfyfrsxdejt0b" path="res://assets/button_long_a.png" id="4_kskyf"]
 [ext_resource type="Texture2D" uid="uid://bts087v54vh3e" path="res://assets/button_long_b.png" id="5_qnrck"]
@@ -39,7 +39,7 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 script = ExtResource("1_njlid")
 
 [node name="bg" type="Sprite2D" parent="."]
-texture = ExtResource("2_h2otn")
+texture = ExtResource("2_04t03")
 script = ExtResource("3_4n2p2")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -144,3 +144,4 @@ grow_horizontal = 2
 texture = ExtResource("7_5433u")
 
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/Button3" to="." method="_on_button_3_pressed"]

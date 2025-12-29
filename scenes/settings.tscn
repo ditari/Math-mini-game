@@ -1,0 +1,216 @@
+[gd_scene load_steps=21 format=3 uid="uid://nnd43wowpthu"]
+
+[ext_resource type="Script" path="res://scripts/settings.gd" id="1_gng2f"]
+[ext_resource type="Texture2D" uid="uid://bkgb5idunxe2y" path="res://assets/bg8.png" id="2_4wnwk"]
+[ext_resource type="Script" path="res://scripts/bg.gd" id="3_1rl0v"]
+[ext_resource type="Texture2D" uid="uid://cp7fdxpcyaet5" path="res://assets/checked50.png" id="4_s8wu4"]
+[ext_resource type="Texture2D" uid="uid://g8vnt65hjxf" path="res://assets/unchecked50.png" id="5_d3oco"]
+[ext_resource type="Texture2D" uid="uid://dfyfrsxdejt0b" path="res://assets/button_long_a.png" id="6_byjei"]
+[ext_resource type="Texture2D" uid="uid://bts087v54vh3e" path="res://assets/button_long_b.png" id="7_11b62"]
+[ext_resource type="Script" path="res://scripts/Button.gd" id="8_uexlk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t7hko"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k0p7t"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_44kwn"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rrwg5"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mfuwk"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3oruw"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fdi0k"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fvj7i"]
+texture = ExtResource("6_byjei")
+texture_margin_left = 24.0
+texture_margin_top = 24.0
+texture_margin_right = 24.0
+texture_margin_bottom = 24.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3fv25"]
+texture = ExtResource("6_byjei")
+texture_margin_left = 24.0
+texture_margin_top = 24.0
+texture_margin_right = 24.0
+texture_margin_bottom = 24.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_63kqd"]
+texture = ExtResource("7_11b62")
+texture_margin_left = 24.0
+texture_margin_top = 24.0
+texture_margin_right = 24.0
+texture_margin_bottom = 24.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fnnrv"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0bm7r"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_gng2f")
+
+[node name="bg" type="Sprite2D" parent="."]
+texture = ExtResource("2_4wnwk")
+script = ExtResource("3_1rl0v")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -114.0
+offset_top = 50.0
+offset_right = 114.0
+offset_bottom = 122.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_t7hko")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/PanelContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 50
+text = "SETTINGS"
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -340.0
+offset_bottom = -237.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 50
+text = "BGM"
+
+[node name="Spacer" type="Control" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CheckButton" type="CheckButton" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_icons/checked = ExtResource("4_s8wu4")
+theme_override_icons/unchecked = ExtResource("5_d3oco")
+theme_override_styles/normal = SubResource("StyleBoxFlat_k0p7t")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_44kwn")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_rrwg5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mfuwk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_3oruw")
+theme_override_styles/focus = SubResource("StyleBoxFlat_fdi0k")
+text = "ON"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 50
+text = "SOUNDS"
+
+[node name="Spacer" type="Control" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CheckButton2" type="CheckButton" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+theme_override_icons/checked = ExtResource("4_s8wu4")
+theme_override_icons/unchecked = ExtResource("5_d3oco")
+theme_override_styles/normal = SubResource("StyleBoxFlat_k0p7t")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_44kwn")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_rrwg5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_mfuwk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_3oruw")
+theme_override_styles/focus = SubResource("StyleBoxFlat_fdi0k")
+text = "ON"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -70.0
+offset_right = 140.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 70
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/HBoxContainer"]
+custom_minimum_size = Vector2(280, 140)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxTexture_fvj7i")
+theme_override_styles/hover = SubResource("StyleBoxTexture_3fv25")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_63kqd")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_fnnrv")
+theme_override_styles/focus = SubResource("StyleBoxFlat_0bm7r")
+text = "BACK"
+script = ExtResource("8_uexlk")
+
+[node name="Button2" type="Button" parent="CanvasLayer/Control/HBoxContainer"]
+custom_minimum_size = Vector2(280, 140)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxTexture_fvj7i")
+theme_override_styles/hover = SubResource("StyleBoxTexture_3fv25")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_63kqd")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_fnnrv")
+theme_override_styles/focus = SubResource("StyleBoxFlat_0bm7r")
+text = "SAVE"
+script = ExtResource("8_uexlk")
+
+[connection signal="toggled" from="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/CheckButton" to="." method="_on_check_button_toggled"]
+[connection signal="toggled" from="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer2/CheckButton2" to="." method="_on_check_button_2_toggled"]
+[connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/HBoxContainer/Button2" to="." method="_on_button_2_pressed"]

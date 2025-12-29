@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://cd3il87p83pov"]
 
 [ext_resource type="Script" path="res://scripts/levelchoice.gd" id="1_rc47a"]
-[ext_resource type="Texture2D" uid="uid://cnes0j64tbpp5" path="res://assets/bg5.png" id="2_gv40y"]
+[ext_resource type="Texture2D" uid="uid://bkgb5idunxe2y" path="res://assets/bg8.png" id="2_3uwon"]
 [ext_resource type="Script" path="res://scripts/bg.gd" id="3_vc1i4"]
 [ext_resource type="Texture2D" uid="uid://dfyfrsxdejt0b" path="res://assets/button_long_a.png" id="4_omq1h"]
 [ext_resource type="Texture2D" uid="uid://bts087v54vh3e" path="res://assets/button_long_b.png" id="5_l4j3l"]
@@ -38,7 +38,7 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 script = ExtResource("1_rc47a")
 
 [node name="bg" type="Sprite2D" parent="."]
-texture = ExtResource("2_gv40y")
+texture = ExtResource("2_3uwon")
 script = ExtResource("3_vc1i4")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
