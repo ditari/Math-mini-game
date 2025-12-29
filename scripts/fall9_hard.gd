@@ -48,7 +48,7 @@ const reward4 = 0 #dipakai di hard dan expert
 var round_resolved = false
 
 func _ready():
-	print ("fall9normal")
+	print ("fall9hard")
 	var screen_width := get_viewport_rect().size.x
 	gaps = (screen_width - 3 * box_width) / (3 + 1) #gaps untuk 3 boxes
 	#AudioController.play_bgm()
@@ -309,14 +309,23 @@ func generatebox(type, numberlabel):
 # =========================
 # QUESTION / DATA
 # =========================
-
 func generate_arraynumber(correctanswer) :
-	var numbers := range(26)   # 0–25
+	var numbers
+	if correctanswer < 25:
+		numbers = range (0,25)
+	elif correctanswer > 25 : 
+		numbers = range (26,51)
+	else :
+		numbers = range (12,37)
+	#numbers = 25 elements
+	
 	numbers.erase(correctanswer)
+	#numbers = 24 elements
 	numbers.shuffle()
 
 	var result := []
 
+	#choose 8 out of 24
 	for i in range(8):
 		result.append(numbers[i])
 
@@ -469,4 +478,6 @@ func generatequestion5(): #multiply 6-10 x b <= 25
 	var b = randi_range(1, int(25 / a))
 	correctanswer = a * b
 	questionlabel.text = str(a) + " x " + str(b) + " = ?"
+	
+
 	

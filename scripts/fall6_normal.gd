@@ -48,7 +48,7 @@ var level_finished = false
 var round_resolved = false
 
 func _ready():
-	print("fall6easy")
+	print("fall6normal")
 	var screen_width := get_viewport_rect().size.x
 	gaps = (screen_width - 3 * box_width) / (3 + 1) #gaps untuk 3 boxes
 	#AudioController.play_bgm()

@@ -113,6 +113,7 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_pcl7g")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_1nj8e")
 theme_override_styles/focus = SubResource("StyleBoxFlat_7n0a0")
 text = "SETTINGS"
+script = ExtResource("6_etmhr")
 
 [node name="Button4" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
 custom_minimum_size = Vector2(270, 140)
@@ -128,6 +129,7 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_pcl7g")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_1nj8e")
 theme_override_styles/focus = SubResource("StyleBoxFlat_7n0a0")
 text = "CREDITS"
+script = ExtResource("6_etmhr")
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control"]
 layout_mode = 1

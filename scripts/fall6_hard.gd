@@ -16,8 +16,8 @@ var box_y = 480 #awal box jatuh
 var gaps
 
 #kecepatan fall box
-var speedmin = 150
-var speedmax = 200
+var speedmin = 100
+var speedmax = 150
 
 var maxhp = Global.maxhp[Global.difficulty]
 var hp = Global.hp
@@ -40,15 +40,15 @@ const reward2 = 100
 const reward3 = 150
 const reward4 = 0 #dipakai di hard dan expert
 
-##timer - ga dipakai di fall9 tapi dicopy saja siapa tahu ada fall12
-#var level_time = 0.0
-#const LEVEL_DURATION = 30.0 #seconds
-#var level_finished = false
+#timer
+var level_time = 0.0
+const LEVEL_DURATION = 20.0 #seconds
+var level_finished = false
 
 var round_resolved = false
 
 func _ready():
-	print ("fall9normal")
+	print("fall6hard")
 	var screen_width := get_viewport_rect().size.x
 	gaps = (screen_width - 3 * box_width) / (3 + 1) #gaps untuk 3 boxes
 	#AudioController.play_bgm()
@@ -57,8 +57,12 @@ func _ready():
 	randomize()
 	start_round() 
 	
-
 func _process(delta):
+	if level_finished:
+		return
+
+	level_time += delta	
+	
 	handle_result()
 	handle_generation()
 	update_ui()
@@ -156,26 +160,32 @@ func update_ui():
 # ROUND CONTROL
 # =========================
 func start_round():
-	spawn_id += 1
+	# 🚨 stop before generating next question
+	if level_time >= LEVEL_DURATION:
+		#level_finished = true
+		end_level()
+		return	
+	
+	spawn_id += 1               # ❗ invalidate old waves
 	is_generating = false
 	deleteparentboxes()
 
 	generatequestion()
 	generateorder()
 
-	nextshift = 1
+	nextshift = 1 #sebenarnya ga butuh buat fall3
 	clicked_right = null
 	correct_out_screen = false
-	round_resolved = false   # 🔑 reset lock
+	round_resolved = false 
 	
 func handle_result():
-	if round_resolved:
+	if level_finished or round_resolved:
 		return	
 	
 	if clicked_right == null and not correct_out_screen:
 		return
-
-	round_resolved = true   # 🔒 LOCK immediately
+		
+	round_resolved = true   # 🔒 LOCK
 
 	if clicked_right == true:
 		glow_screen_soft()
@@ -189,11 +199,31 @@ func handle_result():
 		hp -= 1
 
 	start_round()	
+
+# =========================
+# Level end before next round started
+# =========================	
+	
+func end_level():
+	if level_finished:
+		return
+
+	level_finished = true
+	
+	spawn_id += 1 # invalidate async spawns
+	Global.score = score
+	Global.hp = hp
+	await get_tree().create_timer(0.3).timeout
+	if is_inside_tree():
+		get_tree().change_scene_to_file("res://scenes/fall9_hard.tscn")
 	
 # =========================
-# GENERATION (THREE WAVES)
+# GENERATION (TWO WAVES)
 # =========================
 func handle_generation():
+	if level_finished:
+		return		
+	
 	if is_generating:
 		return
 
@@ -207,10 +237,6 @@ func handle_generation():
 		nextshift = 3
 		generateboxes2(spawn_id)
 
-	elif nextshift == 3 and $parentboxes.get_child_count() == 0:
-		is_generating = true
-		nextshift = 4
-		generateboxes3(spawn_id)
 	
 # =========================
 # Async spawning
@@ -257,26 +283,6 @@ func generateboxes2(id):
 
 	is_generating = false
 
-func generateboxes3(id):
-	if id != spawn_id:
-		return
-
-	generatebox(arrayorder[6], arraynumber[6])
-
-	await get_tree().create_timer(randi_range(1, 3)).timeout
-	if id != spawn_id:
-		return
-
-	generatebox(arrayorder[7], arraynumber[7])
-
-	await get_tree().create_timer(randi_range(1, 3)).timeout
-	if id != spawn_id:
-		return
-
-	generatebox(arrayorder[8], arraynumber[8])
-
-	is_generating = false
-
 	
 # =========================
 # Box creation
@@ -311,13 +317,23 @@ func generatebox(type, numberlabel):
 # =========================
 
 func generate_arraynumber(correctanswer) :
-	var numbers := range(26)   # 0–25
+	var numbers
+	if correctanswer < 16:
+		numbers = range (0,16)
+	elif correctanswer > 34 : 
+		numbers = range (35,51)
+	else : 
+		numbers = range(correctanswer-8, correctanswer+8)
+	#numbers = 16 elements
+	
 	numbers.erase(correctanswer)
+	#numbers = 15 elements
 	numbers.shuffle()
 
 	var result := []
 
-	for i in range(8):
+	#choose 5 out of 15
+	for i in range(5):
 		result.append(numbers[i])
 
 	result.append(correctanswer)
@@ -328,25 +344,25 @@ func generate_arraynumber(correctanswer) :
 func generateorder():
 	var a1 = ["left", "center", "right"]
 	var a2 = ["left", "center", "right"]
-	var a3 = ["left", "center", "right"]
 	a1.shuffle()
 	a2.shuffle()
-	a3.shuffle()
-	arrayorder = a1 + a2 + a3
+	arrayorder = a1 + a2
 	
 func generatequestion():
 	var roll := randi() % 100  # 0–99
 
-	if roll < 20:
+	if roll < 15:
 		generatequestion1()
-	elif roll < 40:
+	elif roll < 30:
 		generatequestion2()
-	elif roll < 60:
+	elif roll < 55:
 		generatequestion3()
 	elif roll < 80:
 		generatequestion4()
-	else:
+	elif roll < 90:
 		generatequestion5()
+	else:
+		generatequestion6()
 
 	arraynumber = generate_arraynumber(correctanswer)
 	
@@ -370,7 +386,6 @@ func add_no_carry(max_val):
 	# fallback
 	add_single_digit()
 	
-
 func add_with_carry(max_val):
 	reward = reward3
 	for i in 100:
@@ -388,8 +403,7 @@ func add_with_carry(max_val):
 		return
 
 	# fallback
-	add_single_digit()
-		
+	add_single_digit()	
 
 func sub_no_borrow(max_val):
 	reward = reward2
@@ -406,7 +420,6 @@ func sub_no_borrow(max_val):
 
 	# fallback
 	sub_single_digit()
-
 
 func sub_with_borrow(max_val):
 	reward = reward3
@@ -443,30 +456,37 @@ func generatequestion1(): #add sub 0-9
 		add_single_digit() 
 	else:
 		sub_single_digit()
-		
-func generatequestion2(): #add sub 10-25 no carry
-	if (randi() & 1) == 0:
-		add_no_carry(25)		
-	else:
-		sub_no_borrow(25)
 
-func generatequestion3(): #multiply 1-5 x 1-5
-	reward = reward2
+func generatequestion2(): #multiply 1-5 x 1-5
+	reward = reward1
 	var a = randi_range(0,5)
 	var b = randi_range(0, 5)
 	correctanswer = a * b
 	questionlabel.text = str(a) + " x " + str(b) + " = ?"
 	
-func generatequestion4(): #add sub 10-25 with carry
+func generatequestion3(): #add sub 0-9
 	if (randi() & 1) == 0:
-		add_with_carry(25)		
+		add_no_carry(50) 
 	else:
-		sub_with_borrow(25)
-		
-func generatequestion5(): #multiply 6-10 x b <= 25
-	reward = reward3
+		sub_no_borrow(50)
+	
+func generatequestion4(): #multiply 6-10 x b <= 50
+	reward = reward2
 	var a = randi_range(6,10)
-	var b = randi_range(1, int(25 / a))
+	var b = randi_range(1, int(50 / a))
+	correctanswer = a * b
+	questionlabel.text = str(a) + " x " + str(b) + " = ?"
+	
+func generatequestion5(): #add sub 0-9
+	if (randi() & 1) == 0:
+		add_with_carry(50) 
+	else:
+		sub_with_borrow(50)
+
+func generatequestion6(): #multiply 11-15 x b <= 50
+	reward = reward4
+	var a = randi_range(11,15)
+	var b = randi_range(1, int(50 / a))
 	correctanswer = a * b
 	questionlabel.text = str(a) + " x " + str(b) + " = ?"
 	
