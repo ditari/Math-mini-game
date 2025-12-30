@@ -38,11 +38,11 @@ var reward
 const reward1 = 50
 const reward2 = 100
 const reward3 = 150
-const reward4 = 0 #dipakai di hard dan expert
+const reward4 = 0 #dipakai di  expert
 
 #timer
 var level_time = 0.0
-const LEVEL_DURATION = 20.0 #seconds
+const LEVEL_DURATION = 90.0 #seconds
 var level_finished = false
 
 var round_resolved = false
@@ -483,12 +483,10 @@ func generatequestion5(): #add sub with carry
 	else:
 		sub_with_borrow(50)
 
-func generatequestion6():
-	reward = reward4
-
-	var b = randi_range(1, 50)
-	var correctanswer = randi_range(1, 50 / b)
+func generatequestion6(): # a / 1-5 = 1-10
+	reward = reward3
+	correctanswer  = randi_range(1, 5)
+	var b = randi_range(1, 10)	
 	var a = b * correctanswer
-	
 	questionlabel.text = str(a) + " / " + str(b) + " = ?"
 	

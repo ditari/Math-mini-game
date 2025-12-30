@@ -1,6 +1,5 @@
 extends Node2D
 
-
 #easy
 func _on_button_pressed():
 	Global.difficulty = "easy"
@@ -25,7 +24,6 @@ func _on_button_2_pressed():
 	await get_tree().create_timer(0.3).timeout	
 	get_tree().change_scene_to_file("res://scenes/fall3_normal.tscn")
 	
-
 
 func _on_button_3_pressed():
 	Global.difficulty = "hard"

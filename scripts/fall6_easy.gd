@@ -42,7 +42,7 @@ const reward4 = 0 #dipakai di hard dan expert
 
 #timer
 var level_time = 0.0
-const LEVEL_DURATION = 20.0 #seconds
+const LEVEL_DURATION = 90.0 #seconds
 var level_finished = false
 
 var round_resolved = false
