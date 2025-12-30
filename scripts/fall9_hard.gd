@@ -342,20 +342,22 @@ func generateorder():
 	a2.shuffle()
 	a3.shuffle()
 	arrayorder = a1 + a2 + a3
-	
+		
 func generatequestion():
 	var roll := randi() % 100  # 0–99
 
-	if roll < 20:
+	if roll < 15:
 		generatequestion1()
-	elif roll < 40:
+	elif roll < 30:
 		generatequestion2()
-	elif roll < 60:
+	elif roll < 55:
 		generatequestion3()
 	elif roll < 80:
 		generatequestion4()
-	else:
+	elif roll < 90:
 		generatequestion5()
+	else:
+		generatequestion6()
 
 	arraynumber = generate_arraynumber(correctanswer)
 	
@@ -379,7 +381,6 @@ func add_no_carry(max_val):
 	# fallback
 	add_single_digit()
 	
-
 func add_with_carry(max_val):
 	reward = reward3
 	for i in 100:
@@ -397,8 +398,7 @@ func add_with_carry(max_val):
 		return
 
 	# fallback
-	add_single_digit()
-		
+	add_single_digit()	
 
 func sub_no_borrow(max_val):
 	reward = reward2
@@ -415,7 +415,6 @@ func sub_no_borrow(max_val):
 
 	# fallback
 	sub_single_digit()
-
 
 func sub_with_borrow(max_val):
 	reward = reward3
@@ -452,32 +451,39 @@ func generatequestion1(): #add sub 0-9
 		add_single_digit() 
 	else:
 		sub_single_digit()
-		
-func generatequestion2(): #add sub 10-25 no carry
-	if (randi() & 1) == 0:
-		add_no_carry(25)		
-	else:
-		sub_no_borrow(25)
 
-func generatequestion3(): #multiply 1-5 x 1-5
-	reward = reward2
+func generatequestion2(): #multiply 1-5 x 1-5
+	reward = reward1
 	var a = randi_range(0,5)
 	var b = randi_range(0, 5)
 	correctanswer = a * b
 	questionlabel.text = str(a) + " x " + str(b) + " = ?"
 	
-func generatequestion4(): #add sub 10-25 with carry
+func generatequestion3(): #add sub no carry
 	if (randi() & 1) == 0:
-		add_with_carry(25)		
+		add_no_carry(50) 
 	else:
-		sub_with_borrow(25)
-		
-func generatequestion5(): #multiply 6-10 x b <= 25
-	reward = reward3
+		sub_no_borrow(50)
+	
+func generatequestion4(): #multiply 6-10 x b <= 50
+	reward = reward2
 	var a = randi_range(6,10)
-	var b = randi_range(1, int(25 / a))
+	var b = randi_range(1, int(50 / a))
 	correctanswer = a * b
 	questionlabel.text = str(a) + " x " + str(b) + " = ?"
 	
+func generatequestion5(): #add sub with carry
+	if (randi() & 1) == 0:
+		add_with_carry(50) 
+	else:
+		sub_with_borrow(50)
 
+func generatequestion6():
+	reward = reward4
+
+	var b = randi_range(1, 50)
+	var correctanswer = randi_range(1, 50 / b)
+	var a = b * correctanswer
+	
+	questionlabel.text = str(a) + " / " + str(b) + " = ?"
 	

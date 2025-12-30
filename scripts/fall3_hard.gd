@@ -439,7 +439,7 @@ func generatequestion2(): #multiply 1-5 x 1-5
 	correctanswer = a * b
 	questionlabel.text = str(a) + " x " + str(b) + " = ?"
 	
-func generatequestion3(): #add sub 0-9
+func generatequestion3(): #add sub no carry
 	if (randi() & 1) == 0:
 		add_no_carry(50) 
 	else:
@@ -452,16 +452,18 @@ func generatequestion4(): #multiply 6-10 x b <= 50
 	correctanswer = a * b
 	questionlabel.text = str(a) + " x " + str(b) + " = ?"
 	
-func generatequestion5(): #add sub 0-9
+func generatequestion5(): #add sub with carry
 	if (randi() & 1) == 0:
 		add_with_carry(50) 
 	else:
 		sub_with_borrow(50)
 
-func generatequestion6(): #multiply 11-15 x b <= 50
+func generatequestion6():
 	reward = reward4
-	var a = randi_range(11,15)
-	var b = randi_range(1, int(50 / a))
-	correctanswer = a * b
-	questionlabel.text = str(a) + " x " + str(b) + " = ?"
+
+	var b = randi_range(1, 50)
+	var correctanswer = randi_range(1, 50 / b)
+	var a = b * correctanswer
+	
+	questionlabel.text = str(a) + " / " + str(b) + " = ?"
 	

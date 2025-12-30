@@ -315,7 +315,7 @@ func generateorder():
 func generatequestion():
 	var roll := randi() % 100  # 0–99
 
-	if roll < 30:
+	if roll < 50:
 		generatequestion1()
 	elif roll < 80:
 		generatequestion2()
