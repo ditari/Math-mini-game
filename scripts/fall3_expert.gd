@@ -330,9 +330,9 @@ func generatequestion():
 		generatequestion1()
 	elif roll < 40:
 		generatequestion2()
-	elif roll < 75:
+	elif roll < 60:
 		generatequestion3()
-	elif roll < 90:
+	elif roll < 80:
 		generatequestion4()
 	else :
 		generatequestion5()
@@ -362,7 +362,7 @@ func add_no_carry(max_val):
 	add_single_digit()
 	
 func add_with_carry(max_val):
-	reward = reward2
+	reward = reward3
 	for i in 100:
 		var a = randi_range(1, max_val)
 		var b = randi_range(1, max_val)
@@ -397,7 +397,7 @@ func sub_no_borrow(max_val):
 	sub_single_digit()
 
 func sub_with_borrow(max_val):
-	reward = reward2
+	reward = reward3
 	for i in 100:
 		var a = randi_range(1, max_val)
 		var b = randi_range(1, a)
@@ -433,9 +433,9 @@ func generatequestion1(): #add sub no carry
 		sub_no_borrow(100)
 
 func generatequestion2(): #multiply 1-10 x 1-10
-	reward = reward1
-	var a = randi_range(0,10)
-	var b = randi_range(0,10)
+	reward = reward2
+	var a = randi_range(1,10)
+	var b = randi_range(1,10)
 	correctanswer = a * b
 	questionlabel.text = str(a) + " x " + str(b) + " = ?"
 	
@@ -445,16 +445,16 @@ func generatequestion3(): #add sub with carry
 	else:
 		sub_with_borrow(100)
 	
-func generatequestion4(): #multiply 11-15 x b <= 100
+func generatequestion4(): #round division up to 100
 	reward = reward3
-	var a = randi_range(11,15)
-	var b = randi_range(1, int(100 / a))
-	correctanswer = a * b
-	questionlabel.text = str(a) + " x " + str(b) + " = ?"
-		
-func generatequestion5(): #multiply 16-20 x b <=100
+	var b = randi_range(1, 100)
+	var correctanswer = randi_range(1, 100 / b)
+	var a = b * correctanswer
+	questionlabel.text = str(a) + " / " + str(b) + " = ?"
+	
+func generatequestion5(): #multiply 11-20 x b <=100
 	reward = reward4
-	var a = randi_range(16,20)
+	var a = randi_range(11,20)
 	var b = randi_range(1, int(100 / a))
 	correctanswer = a * b
 	questionlabel.text = str(a) + " x " + str(b) + " = ?"

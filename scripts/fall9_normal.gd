@@ -452,8 +452,8 @@ func generatequestion2(): #add sub 10-25 no carry
 
 func generatequestion3(): #multiply 1-5 x 1-5
 	reward = reward2
-	var a = randi_range(0,5)
-	var b = randi_range(0, 5)
+	var a = randi_range(1,5)
+	var b = randi_range(1,5)
 	correctanswer = a * b
 	questionlabel.text = str(a) + " x " + str(b) + " = ?"
 	
