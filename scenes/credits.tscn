@@ -1,0 +1,111 @@
+[gd_scene load_steps=13 format=3 uid="uid://dkd6omu1aefkc"]
+
+[ext_resource type="Script" path="res://scripts/credits.gd" id="1_6cp51"]
+[ext_resource type="Texture2D" uid="uid://bkgb5idunxe2y" path="res://assets/bg8.png" id="2_p4v51"]
+[ext_resource type="Script" path="res://scripts/bg.gd" id="3_lq6g1"]
+[ext_resource type="Texture2D" uid="uid://cnun4numxkbug" path="res://assets/back.png" id="9_afvxq"]
+[ext_resource type="Texture2D" uid="uid://lf2opw508r2v" path="res://assets/back_pressed.png" id="10_0xkhy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t7hko"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gvvjv"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gpmx7"]
+texture = ExtResource("9_afvxq")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nudvw"]
+texture = ExtResource("9_afvxq")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pvqjp"]
+texture = ExtResource("10_0xkhy")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f5g51"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1h8fe"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_6cp51")
+
+[node name="bg" type="Sprite2D" parent="."]
+texture = ExtResource("2_p4v51")
+script = ExtResource("3_lq6g1")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -161.0
+offset_top = 50.0
+offset_right = 161.0
+offset_bottom = 149.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_t7hko")
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/PanelContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 70
+text = "CREDITS"
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -340.0
+offset_bottom = -237.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Photo by eduardo rosal (Unsplash)"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "Photo by kazuend (Unsplash)"
+horizontal_alignment = 1
+
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 70.0
+offset_right = 140.0
+offset_bottom = 140.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_gvvjv")
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/PanelContainer2"]
+custom_minimum_size = Vector2(100, 70)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_gpmx7")
+theme_override_styles/hover = SubResource("StyleBoxTexture_nudvw")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_pvqjp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_f5g51")
+theme_override_styles/focus = SubResource("StyleBoxFlat_1h8fe")
+
+[connection signal="pressed" from="CanvasLayer/Control/PanelContainer2/Button" to="." method="_on_button_pressed"]

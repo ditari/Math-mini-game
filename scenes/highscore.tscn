@@ -1,9 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://dakgc2ndbkcom"]
+[gd_scene load_steps=13 format=3 uid="uid://dakgc2ndbkcom"]
 
 [ext_resource type="Script" path="res://scripts/highscore.gd" id="1_c711f"]
 [ext_resource type="Texture2D" uid="uid://bkgb5idunxe2y" path="res://assets/bg8.png" id="2_rvmpu"]
 [ext_resource type="Script" path="res://scripts/bg.gd" id="3_ldpc2"]
-[ext_resource type="Script" path="res://scripts/Button.gd" id="8_32ckf"]
 [ext_resource type="Texture2D" uid="uid://cnun4numxkbug" path="res://assets/back.png" id="9_h6cx2"]
 [ext_resource type="Texture2D" uid="uid://lf2opw508r2v" path="res://assets/back_pressed.png" id="10_474cr"]
 
@@ -178,6 +177,5 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_nudvw")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_pvqjp")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_f5g51")
 theme_override_styles/focus = SubResource("StyleBoxFlat_1h8fe")
-script = ExtResource("8_32ckf")
 
 [connection signal="pressed" from="CanvasLayer/Control/PanelContainer2/Button" to="." method="_on_button_pressed"]
