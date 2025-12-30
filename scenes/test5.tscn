@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/test5.gd" id="1_7kdat"]
 [ext_resource type="Texture2D" uid="uid://cwv7c7bspw67y" path="res://assets/checked.png" id="2_nyvrk"]
-[ext_resource type="Texture2D" uid="uid://dhi7mbyiknhsr" path="res://assets/trash/unchecked.png" id="3_rilbv"]
+[ext_resource type="Texture2D" uid="uid://dhi7mbyiknhsr" path="res://assets/unchecked.png" id="3_rilbv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ryq7"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
